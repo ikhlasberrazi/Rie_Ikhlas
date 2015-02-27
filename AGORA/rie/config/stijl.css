@@ -1,0 +1,390 @@
+body
+{
+	font-size:x-small;
+	font-family:Verdana;
+}
+
+table
+{
+	border-collapse:collapse;
+	border:0px solid black;
+	padding:0px;
+	
+}
+
+thead
+{
+	font-weight:bold;
+	background:lightgrey;
+}
+
+tr
+{
+	border-collapse:collapse;
+}
+
+
+td
+{
+	border-collapse:collapse;
+	padding-left:5px;
+	padding-right:5px;
+	font-size:x-small;
+	font-family:Verdana;
+}
+
+h1
+{
+	padding:0px;
+	margin:0px;
+	font-size:medium;
+	font-family:Verdana;
+}
+
+h2
+{
+	padding:0px;
+	margin:0px;
+	font-size:small;
+	font-family:Verdana;
+}
+
+h3
+{
+	padding:0px;
+	margin:0px;
+	font-size:x-small;
+	font-family:Verdana;
+}
+
+img
+{
+	border:0px;
+}
+
+input
+{
+	font-size:x-small;
+	font-family:Verdana;
+}
+
+select
+{
+	font-size:x-small;
+	font-family:Verdana;
+}
+
+a
+{
+	text-decoration:none;
+	font-size:x-small;
+	font-family:Verdana;
+}
+
+span
+{
+	vertical-align:middle;
+}
+
+tr.red
+{
+	background-color:#ff9999;
+}
+tr.green
+{
+	background-color:#99ff99;
+}
+tr.orange
+{
+	background-color:#ffcc33;
+}
+
+tr.blue
+{
+	background-color:#ff99ff;
+}
+
+tr.yellow
+{
+	background-color:#FFFF99;
+}
+
+
+
+.cmsmenu
+{
+	width:100%;
+	padding-left:20px;
+	padding-right:20px;
+	height:85px;
+	background-image: url('../../images/achtergrondmenu.jpg');
+}
+
+table.tabellocaties
+{
+	width:auto;
+}
+.tabellocaties td
+{
+	padding-left:20px;
+}
+
+.uitvoerders td
+{
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.overzichtcontroles td
+{
+	padding-left:20px;
+	padding-right:5px;
+}
+
+<--! menu met kleur -->
+
+.ubercolortabs{
+padding: 0;
+margin-bottom:0px;
+width: 100%;
+overflow: hidden;
+background: transparent;
+
+}
+
+.ubercolortabs ul{
+font: small, bold, Arial, Verdana, sans-serif;
+margin: 0;
+padding: 0;
+list-style: none;
+}
+
+.ubercolortabs li{
+display: inline;
+margin: 0 2px 0 0;
+padding: 0;
+
+}
+
+
+.ubercolortabs a{
+float: left;
+color: white;
+background: #666 url(../../images/roundleft.gif) no-repeat left top; /*default background color of tabs, left corner image*/
+margin: 0 2px 0 0;
+padding: 0 0 1px 3px;
+text-decoration: none;
+letter-spacing: 1px;
+font-family:Arial;
+}
+
+.ubercolortabs a span{
+float: left;
+display: block;
+background: transparent url(../../images/roundright.gif) no-repeat right top; /*right corner image*/
+padding: 7px 9px 3px 6px;
+cursor: pointer;
+}
+
+#menu_actief
+{
+	background: green url(../../images/roundleft.gif) no-repeat left top;
+}
+
+
+.ubercolortabs a span{
+float: none;
+}
+
+
+.ubercolortabs a:hover, .ubercolortabs li.selected a{
+background-color: #999; /*background color of tabs onMouseover*/
+color: white;
+}
+
+.ubercolortabs a:hover span{
+background-color: transparent;
+}
+
+
+.ubercolordivider{ /*CSS for horizontal line.*/
+clear: both;
+padding: 0;
+width: 100%;
+height: 5px;
+line-height: 5px;
+background: #804000; /*background color of horizontal line*/
+border-top: 1px solid #fff; /*Remove this to remove border between bar and tabs*/
+}
+
+/*Credits: Dynamic Drive CSS Library */
+/*URL: http://www.dynamicdrive.com/style/ */
+
+.thumbnail{
+position: relative;
+z-index: 0;
+}
+
+.thumbnail:hover{
+background-color: transparent;
+z-index: 50;
+}
+
+.thumbnail span{ /*CSS for enlarged image*/
+position: absolute;
+background-color: lightyellow;
+width:200px;
+padding: 5px;
+left: -1000px;
+border: 1px dashed gray;
+visibility: hidden;
+color: black;
+text-decoration: none;
+}
+
+.thumbnail span img{ /*CSS for enlarged image*/
+border-width: 0;
+padding: 2px;
+}
+
+.thumbnail:hover span{ /*CSS for enlarged image on hover*/
+visibility: visible;
+top: 0;
+left: 60px; /*position where enlarged image should offset horizontally */
+
+}
+
+#dataTable
+{
+	clear:both;
+}
+
+
+#dataTable tr.red:hover
+{
+	background-color: #ffcccc;
+}
+
+#dataTable tr.green:hover
+{
+	background-color:#ccffcc;
+}
+#dataTable tr.orange:hover
+{
+	background-color:#ffcc66;
+}
+
+#dataTable tr.blue:hover
+{
+	background-color:#ffccff;
+}
+
+#dataTable tr:hover
+{
+	background-color:lightgray;
+	border:1px solid black;
+}
+
+#dataTable thead
+{
+	background-color:lightgray;
+	border:1px solid black;
+	font-weight:bolder;
+}
+
+#dataTable2
+{
+	clear:both;
+}
+
+#dataTable2 tr.red:hover
+{
+	background-color: #ffcccc;
+}
+
+#dataTable2 tr.green:hover
+{
+	background-color:#ccffcc;
+}
+#dataTable2 tr.orange:hover
+{
+	background-color:#ffcc66;
+}
+
+#dataTable2 tr.blue:hover
+{
+	background-color:#ffccff;
+}
+
+#dataTable2 tr:hover
+{
+	background-color:lightgray;
+	border:1px solid black;
+}
+
+#dataTable2 thead
+{
+	background-color:lightgray;
+	border:1px solid black;
+	font-weight:bolder;
+}
+
+.nieuwe_controle
+{
+	padding:10px;
+	border:1px solid blue;
+}
+
+td.form_titel
+{
+	text-align:right;
+	padding-right:10px;
+	font-weight:bold;
+}
+
+td.form_veld
+{
+	padding-left:10px;
+	text-align:left;
+	vertical-align:middle;
+
+}
+
+table.nieuws
+{
+	width:50%;
+}
+
+.nieuw
+{
+	border:1px solid green; 
+	padding:20px;
+	width:500px;
+}
+
+.verberg
+{
+	display: none;
+}
+.lijsten
+{
+	border:1px solid #00C; 
+	padding:10px; 
+	margin:20px; 
+	float:left
+}
+
+.kies_entiteit
+{
+	margin:20px;
+	padding:20px;
+	border:1px solid red;
+	width:600px;
+}
+
+tr.uitdienst td
+{
+	color:'red';
+	background-color:red;
+	text-decoration:'stripe';
+}
