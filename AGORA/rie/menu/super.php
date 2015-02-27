@@ -5,22 +5,29 @@ if(($_SESSION[aard]=="super") and ($_SESSION[school_id]=="0"))
 	print("
         <div class=\"ubercolortabs\">
             <ul>
+            	
+                <li>
+                    <a href='index.php?pad=school&go=startcategorie'"); 
+                    if($go=="startcategorie") 
+                    print(" id='menu_actief'"); 
+                    print("><span>Onderdelen</span></a>
+                </li> 
                  <li>
                     <a href='index.php?pad=school&go=startrie'"); 
                     if($go=="startrie") 
-                         print(" id='menu_actief'"); 
+                    print(" id='menu_actief'"); 
                     print("><span>Risicoanalyses</span></a>
                 </li> 
                  <li>
                     <a href='index.php?pad=school&go=vragendatabase'"); 
-                    if($go=="vragendatabase") 
-                        print(" id='menu_actief'"); 
+                    if($go=="startvragen") 
+                    print(" id='menu_actief'"); 
                     print("><span>Database Vragen</span></a>
                 </li> 
                  <li>
                     <a href='index.php?pad=beheer&go=meldingen'"); 
                     if($go=="meldingen") 
-                        print(" id='menu_actief'"); 
+                    print(" id='menu_actief'"); 
                     print("><span>Meldingen</span></a>
                 </li> 
                 

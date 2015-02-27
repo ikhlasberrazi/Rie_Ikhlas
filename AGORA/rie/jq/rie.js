@@ -1,90 +1,43 @@
-//INFO
-function laadLijstRie()
+//dialog form structuur laden in rie.php case structuur
+function laadVragenLijstRie()
 {
-    alert("tadaaaaaaa");
-    //vragen
-    $("#vragenLijst").html("<img src='../images/progress.gif' />");
-    
-    $.post("jq/rie.php",{actie:"actieveVragenlijst"}, function(data) 
-    {
-    	$("#vragenLijst").html(data);
-    	$( "#accordion" ).accordion();
-    });
-    $.post("jq/rie.php",{actie:"inactieveVragenlijst"}, function(data) 
-    {
-    	$("#invragenLijst").html(data);
-    	$( "#accordion" ).accordion();
-    });			
-    
-    //onderdelen
-    //$("#onderdelenLijst").html("<img src='../images/progress.gif' />");
-    
-    $.post("jq/rie.php",{actie:"actieveOnderdelenLijst"}, function(data) 
-    {
-    	$("#onderdelenLijst").html(data);
-    	$( "#accordion" ).accordion();
-    });
-    $.post("jq/rie.php",{actie:"inactieveOnderdelenlijst"}, function(data) 
-    {
-    	$("#inonderdelenLijst").html(data);
-    	$( "#accordion" ).accordion();
-    });		
 
+
+	$("#vragenLijst").html("<img src='../images/progress.gif' />");
+	
+	$.post("jq/rie.php",{actie:"actieveVragenlijst"}, function(data) 
+	{
+		$("#vragenLijst").html(data);
+        $( "#accordion" ).accordion();
+	});
+    $.post("jq/rie.php",{actie:"inactieveVragenlijst"}, function(data) 
+	{
+		$("#invragenLijst").html(data);
+        $( "#accordion" ).accordion();
+	});
 }//einde laadvragenlijst
 
-
-
-function rieDeactiveerVraag(aard,id)
+function rieDeactiveerVraag(aard,id,id_hulp)
 {
-    alert("deactiveer");
-    
-        alert("deactiveervragen");
-            $.post("jq/rie.php",{actie:'deactiveerVraag',aard:aard,id:id}, function(data) 
-    	{
-    		
-    		if(aard=="actieveLijst") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
-    		feedback(data);
-    	});
-    
 	
-	
+	$.post("jq/rie.php",{actie:'deactiveerVraag',aard:aard,id:id}, function(data) 
+	{
+		
+		if(aard=="actieveLijst") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
+		feedback(data);
+	});
 }// einde riedeactiveer vraag
-function rieDeactiveerOnderdeel(aard,id)
+
+function rieActiveerVraag(aard,id)
 {
-    alert("deactiveer");
-    
-        alert("deactiveerOnderdeel");
-            $.post("jq/rie.php",{actie:'deactiveerOnderdeel',aard:aard,id:id}, function(data) 
-    	{
-    		
-    		if(aard=="actieveLijst") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
-    		feedback(data);
-    	});
-    
-	
-	
-}// einde riedeactiveer onderdeel
-function rieActiveer(aard,id)
-{
-    if(aard == 'activeerVraag')
-    {
-    	$.post("jq/rie.php",{actie:aard,id:id}, function(data) 
-    	{
-    		$('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
-    		feedback(data);
-    	});
-    }
-    if(aard == 'activeerOnderdeel')
-    {
-    	$.post("jq/rie.php",{actie:aard,id:id}, function(data) 
-    	{
-    		$('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
-    		feedback(data);
-    	});
-    }
+	$.post("jq/rie.php",{actie:'activeerVraag',aard:aard,id:id}, function(data) 
+	{
+		$('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
+		feedback(data);
+	});
 }//einde rieActiveer
 
-function vraagRie(actie,id)
+function vraagRie(id_hoofd,actie,id)
 {
   
 	var dialogOpts = 
@@ -107,65 +60,28 @@ function vraagRie(actie,id)
 		{
 			"Opslaan": function() 
 			{				
-				feedback("<center><img src='../images/progress.gif'></center>");
-				
-				$.post("jq/rie.php",$("#VragenFormID").serialize(), function(data) 
-				{
-                    //alert("case opslaan");
-					
-				
-
-					$("#voegVraagToe").dialog("close");
-					feedback(data);
-					
-				});
-                
-                 //pagina herladen om meteen nieuwste data te zien !!MAG NIET
-                location.reload();
-			}//einde opslaan
-		}
-    };
-	//$("#vragenLijst").load("vragendatabase.php");
-	$("#voegVraagToe").dialog(dialogOpts);
-	$("#voegVraagToe").dialog({title: 'Vragen toevoegen: ' + actie});
-    $("#voegVraagToe").dialog("open");
-}//einde vraag rie
-
-function onderdeelRie(actie,id)
-{
-  
-	var dialogOpts = 
-	{
-        modal: true,
-        autoOpen: false,
-        closeOnEscape: false, //toegevoegd om te stoppen dat het scherm sluit op esc toets
-        height: 200,
-        width: 600,
-		open:function() 
-		{
-			$("#voegVraagToe").html("<img src='../images/progress.gif' />");
-			
-			$.post("jq/rie.php",{actie:'onderdelenForm',id:id}, function(data) 
-			{
-				$("#voegVraagToe").html(data);
-			});
-		},
-		buttons:
-		{
-			"Opslaan": function() 
-			{				
 				
 				$.post("jq/rie.php",$("#VragenFormID").serialize(), function(data) 
 				{
                     //alert("case opslaan");
 					feedback("<center><img src='../images/progress.gif'></center>");
 					
-					$("#voegVraagToe").dialog("close");
-					feedback(data);
-					
+					switch(data)
+				 	{
+						case '0':
+							feedback(data);
+						break;
+									
+						default:
+							if(data>'0')
+							{
+								$("#voegVraagToe").dialog("close");
+								feedback(data);
+							}
+						break;
 					}
 				});
-                //pagina herladen om meteen nieuwste data te zien !!MAG NIET
+                //pagina herladen om meteen nieuwste data te zien
                 location.reload();
                 
 			}//einde opslaan
@@ -174,7 +90,7 @@ function onderdeelRie(actie,id)
 
 	
 	$("#voegVraagToe").dialog(dialogOpts);
-	$("#voegVraagToe").dialog({title: 'Onderdelen toevoegen: ' + actie});
+	$("#voegVraagToe").dialog({title: 'Vragen toevoegen: ' + actie});
     $("#voegVraagToe").dialog("open");
 }//einde vraag rie
 
