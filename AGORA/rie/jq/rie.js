@@ -1,10 +1,10 @@
 //dialog form structuur laden in rie.php case structuur
-function laadVragenLijstRie()
+function laadLijst()
 {
 
 
 	$("#vragenLijst").html("<img src='../images/progress.gif' />");
-	
+	//Vragen laden
 	$.post("jq/rie.php",{actie:"actieveVragenlijst"}, function(data) 
 	{
 		$("#vragenLijst").html(data);
@@ -15,9 +15,20 @@ function laadVragenLijstRie()
 		$("#invragenLijst").html(data);
         $( "#accordion" ).accordion();
 	});
+	//Onderdelen laden
+	$.post("jq/rie.php",{actie:"actieveOnderdelenLijst"}, function(data) 
+	{
+		$("#onderdelenLijst").html(data);
+        $( "#accordion" ).accordion();
+	});
+    $.post("jq/rie.php",{actie:"inactieveOnderdelenLijst"}, function(data) 
+	{
+		$("#inonderdelenLijst").html(data);
+        $( "#accordion" ).accordion();
+	});
 }//einde laadvragenlijst
 
-function rieDeactiveerVraag(aard,id,id_hulp)
+function rieDeactiveerVraag(aard,id)
 {
 	
 	$.post("jq/rie.php",{actie:'deactiveerVraag',aard:aard,id:id}, function(data) 
