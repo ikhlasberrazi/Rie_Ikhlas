@@ -28,24 +28,47 @@ function laadLijst()
 	});
 }//einde laadvragenlijst
 
-function rieDeactiveerVraag(aard,id)
+function rieDeactiveer(casephp,aard,id)
 {
-	
-	$.post("jq/rie.php",{actie:'deactiveerVraag',aard:aard,id:id}, function(data) 
+	if (casephp=='actieveLijst')
 	{
-		
-		if(aard=="actieveLijst") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
-		feedback(data);
-	});
+		$.post("jq/rie.php",{actie:'deactiveerVraag',aard:aard,id:id}, function(data) 
+		{
+			
+			if(aard=="actieveLijst") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
+			feedback(data);
+		});
+	}
+	else if(casephp=='actieveOnderdeel')
+	{
+		$.post("jq/rie.php",{actie:'deactiveerOnderdeel',aard:aard,id:id}, function(data) 
+		{
+			
+			if(aard=="actieveOnderdeel") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
+			feedback(data);
+		});
+	}
+	
 }// einde riedeactiveer vraag
 
-function rieActiveerVraag(aard,id)
+function rieActiveer(casephp,aard,id)
 {
-	$.post("jq/rie.php",{actie:'activeerVraag',aard:aard,id:id}, function(data) 
+	if(casephp=='actieveLijst')
 	{
-		$('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
-		feedback(data);
-	});
+		$.post("jq/rie.php",{actie:'activeerVraag',aard:aard,id:id}, function(data) 
+		{
+			$('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
+			feedback(data);
+		});
+	}
+	else if (casephp == 'actieveOnderdeel')
+	{
+		$.post("jq/rie.php",{actie:'activeerOnderdeel',aard:aard,id:id}, function(data) 
+		{
+			$('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
+			feedback(data);
+		});
+	}
 }//einde rieActiveer
 
 function vraagRie(id_hoofd,actie,id)
