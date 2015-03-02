@@ -71,7 +71,7 @@ function rieActiveer(casephp,aard,id)
 	}
 }//einde rieActiveer
 
-function vraagRie(id_hoofd,actie,id)
+function vraagRie(actie, id)
 {
   
 	var dialogOpts = 
@@ -83,38 +83,54 @@ function vraagRie(id_hoofd,actie,id)
         width: 600,
 		open:function() 
 		{
-			$("#voegVraagToe").html("<img src='../images/progress.gif' />");
-			
-			$.post("jq/rie.php",{actie:'vragenForm',id:id}, function(data) 
+			if(actie=='nieuweVraag')
 			{
+				$("#voegVraagToe").html("<img src='../images/progress.gif' />");
+			
+				$.post("jq/rie.php",{actie:'vragenForm',id:id}, function(data) 
+				{
 				$("#voegVraagToe").html(data);
-			});
+				});
+			}
+			else if (actie='nieuwOnderdeel')
+			{
+				$("#voegVraagToe").html("<img src='../images/progress.gif' />");
+			
+				$.post("jq/rie.php",{actie:'onderdelenForm',id:id}, function(data) 
+				{
+				$("#voegVraagToe").html(data);
+				});
+			}
+			
 		},
 		buttons:
 		{
 			"Opslaan": function() 
 			{				
-				
-				$.post("jq/rie.php",$("#VragenFormID").serialize(), function(data) 
+				if (actie == 'nieuweVraag')
 				{
-                    //alert("case opslaan");
-					feedback("<center><img src='../images/progress.gif'></center>");
-					
-					switch(data)
-				 	{
-						case '0':
-							feedback(data);
-						break;
-									
-						default:
-							if(data>'0')
-							{
-								$("#voegVraagToe").dialog("close");
-								feedback(data);
-							}
-						break;
-					}
-				});
+					$.post("jq/rie.php",$("#VragenFormID").serialize(), function(data) 
+					{
+						//alert("case opslaan");
+						feedback("<center><img src='../images/progress.gif'></center>");
+						
+						$("#voegVraagToe").dialog("close");
+						feedback(data);
+					});
+				}
+				else if (actie == 'nieuwOnderdeel')
+				{
+					$.post("jq/rie.php",$("#onderdelenFormID").serialize(), function(data) 
+					{
+						//alert("case opslaan");
+						feedback("<center><img src='../images/progress.gif'></center>");
+						
+						$("#voegVraagToe").dialog("close");
+						feedback(data);
+					});
+				}
+				
+				
                 //pagina herladen om meteen nieuwste data te zien
                 location.reload();
                 

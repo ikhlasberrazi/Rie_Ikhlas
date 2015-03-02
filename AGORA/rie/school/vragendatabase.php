@@ -8,8 +8,12 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
     <h1>Beheer Rie vragen 
         &nbsp; &nbsp; &nbsp; 
     	<a href='javascript:void(0);' 
-            onClick=\"vraagRie('nieuw','');\">
+            onClick=\"vraagRie('nieuweVraag','');\">
             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
+        </a>
+		<a href='javascript:void(0);' 
+            onClick=\"vraagRie('nieuwOnderdeel','');\">
+            <img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
         </a>
     </h1>
     <br /><br />

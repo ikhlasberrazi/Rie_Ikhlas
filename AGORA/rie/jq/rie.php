@@ -16,6 +16,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 		$id=mysqli_real_escape_string($link,$_POST[id]);
 		$vraag=mysqli_real_escape_string($link,$_POST[vraag]);
         $type_input=mysqli_real_escape_string($link, $_POST[evaluatie]);
+		$naam=mysqli_real_escape_string($link,$_POST[naam]);
 		$aard=mysqli_real_escape_string($link,$_POST[aard]);
 	
 	
@@ -62,7 +63,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 										&nbsp;  &nbsp;  &nbsp; 
 										<a href='javascript:void(0);' 
-											onClick=\"rieDeactiveer('actieveLijst','Onderdeel','".$lijst[id]."','');\">
+											onClick=\"rieDeactiveer('actieveLijst','Vraag','".$lijst[id]."','');\">
 											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a>
 									</td>
 								</tr>
@@ -108,7 +109,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                                     <b>+ ".$lijst[type_input]."</b>
                                 </td>
                                 <td align='right'>
-                                    <a href='javascript:void(0);' onClick=\"rieActiveer('actieveLijst','".$lijst[id]."');\">
+                                    <a href='javascript:void(0);' onClick=\"rieActiveer('actieveLijst','Vraag','".$lijst[id]."');\">
                                     <img src='".$_SESSION[http_images]."vink.png'> Activeer</a>
                                 </td>
                             </tr>
@@ -122,31 +123,33 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
             case 'vragenForm':
 			{
 			 //zoeken naar info in geval van wijzigen
+			 //print("Ik ben hier:".$id."<br />");
 				if($id!="")
 				{
-					$q_cat=
+					$q_vraag=
                     "select * 
                     from rie_input 
                     where id='".$id."' limit 1";
-					$r_cat=mysqli_query($link,$q_cat);
-					if(mysqli_num_rows($r_cat)=="1")
+					//print($q_vraag."<br />");
+					$r_vraag=mysqli_query($link,$q_vraag);
+					if(mysqli_num_rows($r_vraag)=="1")
 					{
-						$cat=mysqli_fetch_array($r_cat);
+						$vraag=mysqli_fetch_array($r_vraag);
 					}
-					else $cat=array();
+					else $vraag=array();
 				}
-				else $cat=array();
+				else $vraag=array();
 				
 				print("
 					<form id='VragenFormID'>
 					<input type='hidden' name='actie' value='vraag_opslaan'>
 					<input type='hidden' name='id' value='".$id."'>
                     <br/>
-					Vraag: <input type='text' name='vraag' size='75'><br/>
+					Vraag: <input type='text' name='vraag' value='".$vraag[vraag]."' size='75'><br/>
                     <br/>
                     Welke evaluatiemethode wil je bij deze vraag?
-                    <select name='evaluatie'>
-                      <option value=''>Selecteer...</option>
+                    <select name='evaluatie' value='".$vraag[type_input]."'>
+                      <option >Selecteer...</option>
                       <option value='RG'>Risicograaf</option>
                       <option value='Kinney'>Kinney methode</option>
                       <option value='Guy'>Guy Lenaerts</option>
@@ -183,12 +186,18 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					else print("<br /><br /><br /><h2><font color=red><center>Vraag opslaan MISLUKT!</center></font></h2>");
 				}
                 
-                else
+                else //dan gaan we de database updaten met de nieuwe data
 				{
+					 //print("Ik ben hier om te wijzigen:".$id."<br />");
 					//update
 					if($_SESSION[aard]=="super")
-                        $q_update="update rie_input set vraag='".$vraag."' type_input='".$type_input."'  where id='".$id."'";
-				
+					{
+                        $q_update="
+							update rie_input 
+							set vraag='".$vraag."', type_input='".$type_input."'  
+							where id='".$id."'
+							";
+					}
 					$r_update=mysqli_query($link,$q_update);
 					if($r_update) 
 					{
@@ -234,6 +243,14 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				}
 			}break;
         
+		
+		
+		
+		
+		
+		
+		
+		
     //ALLES VAN ONDERDELEN
 			case 'actieveOnderdelenLijst': //case komende van rie.js LaadRie
 			
@@ -249,14 +266,6 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				$r_actieveOnderdelen=mysqli_query($link, $q_actieveOnderdelen);
 				
 				
-				//query om de vragen op te halen
-				$q_actieveVragen=
-				"select *
-				from rie_input
-				where actief =1
-				order by vraag";
-				$r_actieveVragen=mysqli_query($link, $q_actieveVragen);
-				
 				if(mysqli_num_rows($r_actieveOnderdelen)>"0")
 				{
 					print("
@@ -264,7 +273,6 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						<thead>
 							<tr>
 								<td>Onderdeel</td>
-								<td>Vraag</td>
 								<td>Actie</td>
 							</tr>
 						</thead>
@@ -273,24 +281,22 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				   
 				  while($lijst=mysqli_fetch_array($r_actieveOnderdelen))
 						{
-							while($lijst2=mysqli_fetch_array($r_actieveVragen))
-							{
+							
 							print("
 								<tr>
 									<td><b>+ ".$lijst[naam]."</b></td>
-									<td><b>+ ".$lijst2[vraag]."</b></td>
 									<td align='right'>
 										<a href='javascript:void(0);' 
 											onClick=\"vraagRie('wijzig','".$lijst[id]."');\">
 											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 										&nbsp;  &nbsp;  &nbsp; 
 										<a href='javascript:void(0);' 
-											onClick=\"rieDeactiveer('actieveOnderdeel','".$lijst[id]."','');\">
+											onClick=\"rieDeactiveer('actieveOnderdeel','Onderdeel','".$lijst[id]."','');\">
 											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a>
 									</td>
 								</tr>
 									"); 
-							}								
+														
 						}
 				print("</table>");
 				}//einde if(mysqli_num_rows($r_actieveVragen)>"0")
@@ -301,44 +307,41 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 			{
 				//hier gaan we de actieve vragen laten zien
 				
-				//query om de vragen op te halen
-				$q_actieveVragen=
+				//query om de onderdelen op te halen
+				$q_inactieveOnderdelen=
 				"select *
-				from rie_input
+				from rie_onderdeel
 				where actief =0
-				order by vraag";
+				order by naam";
+				$r_inactieveOnderdelen=mysqli_query($link, $q_inactieveOnderdelen);
 				
-				$r_actieveVragen=mysqli_query($link, $q_actieveVragen);
-				if(mysqli_num_rows($r_actieveVragen)>"0")
+			
+				if(mysqli_num_rows($r_inactieveOnderdelen)>"0")
 				{
 					print("
 					<table id='datatable'>
 						<thead>
 							<tr>
-								<td>Vraag</td>
-								<td>Evaluatie</td>
+								<td>Onderdeel</td>
 								<td>Actie</td>
 							</tr>
 						</thead>
 					<tbody>
 							 ");
 				   
-				  while($lijst=mysqli_fetch_array($r_actieveVragen))
+				  while($lijst=mysqli_fetch_array($r_inactieveOnderdelen))
 						{
+							
 							print("
 								<tr>
-									<td>
-										<b>+ ".$lijst[vraag]."</b>
-									</td>
-									<td>
-										<b>+ ".$lijst[type_input]."</b>
-									</td>
+									<td><b>+ ".$lijst[naam]."</b></td>
 									<td align='right'>
-										<a href='javascript:void(0);' onClick=\"rieActiveer('actieveOnderdeel','".$lijst[id]."');\">
+										<a href='javascript:void(0);' onClick=\"rieActiveer('actieveOnderdeel','Onderdeel','".$lijst[id]."');\">
 										<img src='".$_SESSION[http_images]."vink.png'> Activeer</a>
 									</td>
 								</tr>
-									");                  
+									");     
+															
 						}
 				print("</table>");
 				}//einde if(mysqli_num_rows($r_actieveVragen)>"0")
@@ -348,37 +351,29 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
             case 'onderdelenForm':
 			{
 			 //zoeken naar info in geval van wijzigen
-				if($id!="")
+					if($id!="")
 				{
-					$q_cat=
+					$q_onderdeel=
                     "select * 
                     from rie_onderdeel 
                     where id='".$id."' limit 1";
-					$r_cat=mysqli_query($link,$q_cat);
-					if(mysqli_num_rows($r_cat)=="1")
+					$r_onderdeel=mysqli_query($link,$q_onderdeel);
+					if(mysqli_num_rows($r_onderdeel)=="1")
 					{
-						$cat=mysqli_fetch_array($r_cat);
+						$onderdeel=mysqli_fetch_array($r_onderdeel);
 					}
-					else $cat=array();
+					else $onderdeel=array();
 				}
-				else $cat=array();
+				else $onderdeel=array();
 				
 				print("
 					<form id='onderdelenFormID'>
 					<input type='hidden' name='actie' value='onderdeelOpslaan'>
 					<input type='hidden' name='id' value='".$id."'>
                     <br/>
-					Onderdeel: <input type='text' name='naam' size='75'><br/>
-                    <br/>
-                    Welke vraag wil je bij dit onderdeel?
-                    <select name='evaluatie'>
-                      <option value=''>Selecteer...</option>
-                      <option value='RG'>Risicograaf</option>
-                      <option value='Kinney'>Kinney methode</option>
-                      <option value='Guy'>Guy Lenaerts</option>
-                      <option value='kleur'>Kleurencode</option>
-                    </select>
-                    <br/>
+					Onderdeel: <input type='text' name='naam' value='".$onderdeel[naam]."' size='75'><br/>
+                    <br />
+                    <br />
 					</form>
 				");
 			}break;	//einde onderdelenForm
@@ -391,7 +386,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					//insert
 					$q_insert=
                     "insert into rie_onderdeel (naam, actief) 
-                    values('".$vraag."','".$type_input."','";
+                    values('".$naam."','";
 					if($_SESSION[aard]=="super") 
                         $q_insert.="1";
 					else $q_insert.="2";
@@ -413,7 +408,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				{
 					//update
 					if($_SESSION[aard]=="super")
-                        $q_update="update rie_onderdeel set naam='".$vraag."' type_input='".$type_input."'  where id='".$id."'";
+                        $q_update="update rie_onderdeel set naam='".$naam."' where id='".$id."'";
 				
 					$r_update=mysqli_query($link,$q_update);
 					if($r_update) 
