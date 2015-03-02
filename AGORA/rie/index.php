@@ -14,6 +14,16 @@ if($_SESSION[login]=="wos_coprant")
 <html>
  
 <head>
+	<!-- enter key blokkeren van functie -->
+	 <script type="text/javascript">
+    function stopEnterKey(evt) {
+        var evt = (evt) ? evt : ((event) ? event : null);
+        var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+        if ((evt.keyCode == 13) && (node.type == "text")) { return false; }
+    }
+    document.onkeypress = stopEnterKey;
+</script> 
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link href='config/stijl.css' rel=stylesheet type=text/css>
 	

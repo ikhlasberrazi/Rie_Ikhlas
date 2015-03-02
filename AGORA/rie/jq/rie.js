@@ -9,25 +9,27 @@ function laadLijst()
 	$.post("jq/rie.php",{actie:"actieveVragenlijst"}, function(data) 
 	{
 		$("#vragenLijst").html(data);
-        $( "#accordion" ).accordion();
+        $( "#accordion" ).accordion({active: false, collapsible: true});
 	});
     $.post("jq/rie.php",{actie:"inactieveVragenlijst"}, function(data) 
 	{
 		$("#invragenLijst").html(data);
-        $( "#accordion" ).accordion();
+        $( "#accordion" ).accordion({active: false, collapsible: true});
 	});
 	//Onderdelen laden
 	$.post("jq/rie.php",{actie:"actieveOnderdelenLijst"}, function(data) 
 	{
 		$("#onderdelenLijst").html(data);
-        $( "#accordion" ).accordion();
+        $( "#accordion" ).accordion({active: false, collapsible: true});
 	});
     $.post("jq/rie.php",{actie:"inactieveOnderdelenLijst"}, function(data) 
 	{
 		$("#inonderdelenLijst").html(data);
-        $( "#accordion" ).accordion();
+        $( "#accordion" ).accordion({active: false, collapsible: true});
 	});
 }//einde laadvragenlijst
+
+//
 
 function rieDeactiveer(casephp,aard,id)
 {
@@ -78,29 +80,20 @@ function rieActiveer(casephp,aard,id)
 
 function vraagRie(actie, id)
 {
-  
-	var dialogOpts = 
+    var dialogOpts = 
 	{
         modal: true,
         autoOpen: false,
-        closeOnEscape: false, //toegevoegd om te stoppen dat het scherm sluit op esc toets
         height: 200,
         width: 600,
 		open:function() 
 		{
-			
-				
 					$("#voegVraagToe").html("<img src='../images/progress.gif' />");
 				
 					$.post("jq/rie.php",{actie:'vragenForm',id:id}, function(data) 
 					{
 					$("#voegVraagToe").html(data);
 					});
-				
-				
-			
-			
-			
 		},
 		buttons:
 		{
@@ -110,20 +103,21 @@ function vraagRie(actie, id)
 					
 					$.post("jq/rie.php",$("#VragenFormID").serialize(), function(data) 
 					{
+					   
 						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
 						$("#voegVraagToe").dialog("close");//divID in vragendatabase.php
 						feedback(data);
 						laadLijst();
+                        $('.input').keypress(function (e) {
+                          if (e.which == 13) {
+                            $('form#login').submit();
+                            return false;    //<---- Add this line
+                          }
+                        });
+						
 					});
-				
-				
-				
-				
-				
-                
-                
 			}//einde opslaan
 		}
     };
@@ -141,7 +135,6 @@ function onderdeelRie(actie, id)
 	{
         modal: true,
         autoOpen: false,
-        closeOnEscape: false, //toegevoegd om te stoppen dat het scherm sluit op esc toets
         height: 200,
         width: 600,
 		open:function() 
@@ -187,5 +180,4 @@ function onderdeelRie(actie, id)
 	$("#voegVraagToe").dialog({title: 'Onderdelen toevoegen: ' + actie});
     $("#voegVraagToe").dialog("open");
 }//einde onderdeel rie
-
 

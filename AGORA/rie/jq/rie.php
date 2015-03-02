@@ -124,6 +124,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
             //bij volgende code wordt de form van in de dialog box geladen. 
             case 'vragenForm':
 			{
+			 
 			 //zoeken naar info in geval van wijzigen
 			 //print("Ik ben hier:".$id."<br />");
 				if($id!="")
@@ -143,12 +144,14 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				}
 				else $vraag=array();
 				
+                
+                //in de volgende print staan twee input velden. de eerste is om naar de volgende case te gaan "vraag_opslaan" en de tweede is om de ID door te geven aan deze case
 				print("
 					<form id='VragenFormID'>
 					<input type='hidden' name='actie' value='vraag_opslaan'>
-					<input type='hidden' name='id' value='".$id."'>
+					<input type='hidden' name='id' value='".$id."'> 
                     <br/>
-					Vraag: <input type='text' name='vraag' value='".$vraag[vraag]."' size='75'><br/>
+					Vraag: <input  type='text' name='vraag' value='".$vraag[vraag]."' size='75'><br/>
                     <br/>
                     Welke evaluatiemethode wil je bij deze vraag?
                     <select name='evaluatie'>
@@ -399,7 +402,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					else $q_insert.="2";
 					
                     $q_insert.="')";
-					print($q_insert."<br />");
+					//print($q_insert."<br />");
                     $r_insert=mysqli_query($link,$q_insert);
                     
                     
