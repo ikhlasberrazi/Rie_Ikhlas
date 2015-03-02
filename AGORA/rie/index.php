@@ -39,9 +39,14 @@ if($_SESSION[login]=="wos_coprant")
 	<script type="text/javascript" src="../jq/jquery.dataTables.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
 	<script type="text/javascript" src="../jq/uploader_html5.js"></script>
-	<script type="text/javascript" src="../jq/start.js.php"></script>	
+	<script type="text/javascript" src="../jq/start.js.php"></script>
+    
+
+
+
 	
-	<script type="text/javascript" src="jq/rie.js"></script>	
+	<script type="text/javascript" src="jq/rie.js"></script>
+    <script type="text/javascript" src="jq/rieAnalyses.js"></script>	
 	
 	<script language="JavaScript">
 	$(document).ready(function(){
