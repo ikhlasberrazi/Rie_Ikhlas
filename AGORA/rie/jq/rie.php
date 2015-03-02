@@ -126,6 +126,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 			 //print("Ik ben hier:".$id."<br />");
 				if($id!="")
 				{
+				    //query om vraag op te halen bij wijzigen
 					$q_vraag=
                     "select * 
                     from rie_input 
@@ -148,12 +149,12 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					Vraag: <input type='text' name='vraag' value='".$vraag[vraag]."' size='75'><br/>
                     <br/>
                     Welke evaluatiemethode wil je bij deze vraag?
-                    <select name='evaluatie' value='".$vraag[type_input]."'>
-                      <option >Selecteer...</option>
-                      <option value='RG'>Risicograaf</option>
-                      <option value='Kinney'>Kinney methode</option>
-                      <option value='Guy'>Guy Lenaerts</option>
-                      <option value='kleur'>Kleurencode</option>
+                    <select name='evaluatie'>
+                      <option value'Geen'>Selecteer...</option>
+                      <option value='RG' "); if ($vraag[type_input]=="RG") print(" SELECTED "); print(">Risicograaf</option>
+                      <option value='Kinney' "); if ($vraag[type_input]=="Kinney") print(" SELECTED "); print(">Kinney methode</option>
+                      <option value='Guy' "); if ($vraag[type_input]=="Guy") print(" SELECTED "); print(">Guy Lenaerts</option>
+                      <option value='kleur' "); if ($vraag[type_input]=="kleur") print(" SELECTED "); print(">Kleurencode</option>
                     </select>
                     <br/>
 					</form>
@@ -287,7 +288,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 									<td><b>+ ".$lijst[naam]."</b></td>
 									<td align='right'>
 										<a href='javascript:void(0);' 
-											onClick=\"vraagRie('wijzig','".$lijst[id]."');\">
+											onClick=\"onderdeelRie('wijzig','".$lijst[id]."');\">
 											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 										&nbsp;  &nbsp;  &nbsp; 
 										<a href='javascript:void(0);' 
@@ -378,7 +379,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				");
 			}break;	//einde onderdelenForm
 			
-            //button om vragen weg te schrijven naar database tabel rie_input
+            //button om vragen weg te schrijven naar database tabel rie_onderdeel
 			case 'onderdeelOpslaan':
 			{
 				if($id=="")
@@ -392,16 +393,18 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					else $q_insert.="2";
 					
                     $q_insert.="')";
-					
+					print($q_insert."<br />");
                     $r_insert=mysqli_query($link,$q_insert);
+                    
+                    
 					if($r_insert) 
 					{
 						if($_SESSION[aard]=="super") 
                             print("<br /><br /><br /><h2><font color=green><center>Onderdeel met succes opgeslagen!</center></font></h2>");
 						else print("<br /><br /><br /><h2><font color=green><center>Voorstel nieuw onderdeel met succes opgeslagen!</center></font></h2>");
 					}
-                    //else print(mysql_error());
-					else print("<br /><br /><br /><h2><font color=red><center>Onderdeel opslaan MISLUKT!</center></font></h2>");
+					else print ($naam);
+					//else print("<br /><br /><br /><h2><font color=red><center>Onderdeel opslaan MISLUKT!</center></font></h2>");
 				}
                 
                 else

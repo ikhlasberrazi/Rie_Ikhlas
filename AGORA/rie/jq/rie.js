@@ -1,7 +1,7 @@
 //dialog form structuur laden in rie.php case structuur
 function laadLijst()
 {
-
+//laadLijst(vraagofonderdeel, actiefnietactief) toevoegen aan accordion click
 
 	$("#vragenLijst").html("<img src='../images/progress.gif' />");
 	//Vragen laden
@@ -83,53 +83,30 @@ function vraagRie(actie, id)
         width: 600,
 		open:function() 
 		{
-			if(actie=='nieuweVraag')
-			{
+			
 				$("#voegVraagToe").html("<img src='../images/progress.gif' />");
 			
 				$.post("jq/rie.php",{actie:'vragenForm',id:id}, function(data) 
 				{
 				$("#voegVraagToe").html(data);
 				});
-			}
-			else if (actie='nieuwOnderdeel')
-			{
-				$("#voegVraagToe").html("<img src='../images/progress.gif' />");
 			
-				$.post("jq/rie.php",{actie:'onderdelenForm',id:id}, function(data) 
-				{
-				$("#voegVraagToe").html(data);
-				});
-			}
+			
 			
 		},
 		buttons:
 		{
 			"Opslaan": function() 
 			{				
-				if (actie == 'nieuweVraag')
-				{
+				
 					$.post("jq/rie.php",$("#VragenFormID").serialize(), function(data) 
 					{
 						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
-						$("#voegVraagToe").dialog("close");
+						$("#voegVraagToe").dialog("close");//divID in vragendatabase.php
 						feedback(data);
 					});
-				}
-				else if (actie == 'nieuwOnderdeel')
-				{
-					$.post("jq/rie.php",$("#onderdelenFormID").serialize(), function(data) 
-					{
-						//alert("case opslaan");
-						feedback("<center><img src='../images/progress.gif'></center>");
-						
-						$("#voegVraagToe").dialog("close");
-						feedback(data);
-					});
-				}
-				
 				
                 //pagina herladen om meteen nieuwste data te zien
                 location.reload();
@@ -143,5 +120,55 @@ function vraagRie(actie, id)
 	$("#voegVraagToe").dialog({title: 'Vragen toevoegen: ' + actie});
     $("#voegVraagToe").dialog("open");
 }//einde vraag rie
+
+function onderdeelRie(actie, id)
+{
+  
+	var dialogOpts = 
+	{
+        modal: true,
+        autoOpen: false,
+        closeOnEscape: false, //toegevoegd om te stoppen dat het scherm sluit op esc toets
+        height: 200,
+        width: 600,
+		open:function() 
+		{
+			
+				$("#voegVraagToe").html("<img src='../images/progress.gif' />");
+			
+				$.post("jq/rie.php",{actie:'onderdelenForm',id:id}, function(data) 
+				{
+				$("#voegVraagToe").html(data);
+				});
+			
+			
+			
+		},
+		buttons:
+		{
+			"Opslaan": function() 
+			{				
+				
+					$.post("jq/rie.php",$("#onderdelenFormID").serialize(), function(data) 
+					{
+						alert("case opslaan onderdeel");
+						feedback("<center><img src='../images/progress.gif'></center>");
+						
+						$("#voegVraagToe").dialog("close");
+						feedback(data);
+					});
+				
+                //pagina herladen om meteen nieuwste data te zien
+               // location.reload();
+                
+			}//einde opslaan
+		}
+    };
+
+	
+	$("#voegVraagToe").dialog(dialogOpts);
+	$("#voegVraagToe").dialog({title: 'Onderdelen toevoegen: ' + actie});
+    $("#voegVraagToe").dialog("open");
+}//einde onderdeel rie
 
 
