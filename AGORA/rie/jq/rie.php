@@ -70,7 +70,9 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 									");                  
 						}
 				print("</table>");
+                
 				}//einde if(mysqli_num_rows($r_actieveVragen)>"0")
+                else print("Geen inhoud!");
 			}break;//einde case actievevragenlijst
 			
 			//inactieve lijst weergevn
@@ -116,7 +118,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                         ");
                 }
             }
-            
+             else print("Geen inhoud!");
         }break;//einde inactieve vragenlijst
         
             //bij volgende code wordt de form van in de dialog box geladen. 
@@ -159,6 +161,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     <br/>
 					</form>
 				");
+                
 			}break;	//einde vragenForm
 			
             //button om vragen weg te schrijven naar database tabel rie_input
@@ -242,6 +245,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				{
 					print("<br /><br /><br /><h2><center><font color=red>".ucfirst($aard)." niet geactiveerd!</font></center></h2>");
 				}
+                 
 			}break;
         
 		
@@ -301,6 +305,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						}
 				print("</table>");
 				}//einde if(mysqli_num_rows($r_actieveVragen)>"0")
+                 else print("Geen inhoud!");
 			}break;//einde case actievevragenlijst
 		
 			case 'inactieveOnderdelenLijst': //case komende van rie.js LaadRie
@@ -346,6 +351,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						}
 				print("</table>");
 				}//einde if(mysqli_num_rows($r_actieveVragen)>"0")
+                 else print("Geen inhoud!");
 			}break;//einde case actievevragenlijst
 			
 			 //bij volgende code wordt de form van in de dialog box geladen. 

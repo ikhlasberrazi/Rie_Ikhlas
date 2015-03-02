@@ -1,6 +1,7 @@
 //dialog form structuur laden in rie.php case structuur
 function laadLijst()
 {
+	//alert("laadRie");
 //laadLijst(vraagofonderdeel, actiefnietactief) toevoegen aan accordion click
 
 	$("#vragenLijst").html("<img src='../images/progress.gif' />");
@@ -37,6 +38,7 @@ function rieDeactiveer(casephp,aard,id)
 			
 			if(aard=="actieveLijst") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
 			feedback(data);
+			laadLijst();
 		});
 	}
 	else if(casephp=='actieveOnderdeel')
@@ -46,6 +48,7 @@ function rieDeactiveer(casephp,aard,id)
 			
 			if(aard=="actieveOnderdeel") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
 			feedback(data);
+			laadLijst();
 		});
 	}
 	
@@ -59,6 +62,7 @@ function rieActiveer(casephp,aard,id)
 		{
 			$('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
 			feedback(data);
+			laadLijst();
 		});
 	}
 	else if (casephp == 'actieveOnderdeel')
@@ -67,6 +71,7 @@ function rieActiveer(casephp,aard,id)
 		{
 			$('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
 			feedback(data);
+			laadLijst();
 		});
 	}
 }//einde rieActiveer
@@ -84,12 +89,15 @@ function vraagRie(actie, id)
 		open:function() 
 		{
 			
-				$("#voegVraagToe").html("<img src='../images/progress.gif' />");
-			
-				$.post("jq/rie.php",{actie:'vragenForm',id:id}, function(data) 
-				{
-				$("#voegVraagToe").html(data);
-				});
+				
+					$("#voegVraagToe").html("<img src='../images/progress.gif' />");
+				
+					$.post("jq/rie.php",{actie:'vragenForm',id:id}, function(data) 
+					{
+					$("#voegVraagToe").html(data);
+					});
+				
+				
 			
 			
 			
@@ -99,6 +107,7 @@ function vraagRie(actie, id)
 			"Opslaan": function() 
 			{				
 				
+					
 					$.post("jq/rie.php",$("#VragenFormID").serialize(), function(data) 
 					{
 						//alert("case opslaan");
@@ -106,10 +115,14 @@ function vraagRie(actie, id)
 						
 						$("#voegVraagToe").dialog("close");//divID in vragendatabase.php
 						feedback(data);
+						laadLijst();
 					});
 				
-                //pagina herladen om meteen nieuwste data te zien
-                location.reload();
+				
+				
+				
+				
+                
                 
 			}//einde opslaan
 		}
@@ -139,6 +152,7 @@ function onderdeelRie(actie, id)
 				$.post("jq/rie.php",{actie:'onderdelenForm',id:id}, function(data) 
 				{
 				$("#voegVraagToe").html(data);
+				
 				});
 			
 			
@@ -151,15 +165,18 @@ function onderdeelRie(actie, id)
 				
 					$.post("jq/rie.php",$("#onderdelenFormID").serialize(), function(data) 
 					{
-						alert("case opslaan onderdeel");
+						//alert("case opslaan onderdeel");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
 						$("#voegVraagToe").dialog("close");
+						
 						feedback(data);
+						
+						laadLijst();
 					});
+					
+					
 				
-                //pagina herladen om meteen nieuwste data te zien
-               // location.reload();
                 
 			}//einde opslaan
 		}
