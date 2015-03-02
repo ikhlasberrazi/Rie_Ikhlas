@@ -6,12 +6,7 @@ if(($_SESSION[aard]=="super") and ($_SESSION[school_id]=="0"))
         <div class=\"ubercolortabs\">
             <ul>
             	
-                <li>
-                    <a href='index.php?pad=school&go=startcategorie'"); 
-                    if($go=="startcategorie") 
-                    print(" id='menu_actief'"); 
-                    print("><span>Onderdelen</span></a>
-                </li> 
+                
                  <li>
                     <a href='index.php?pad=school&go=vragenlijst'"); 
                     if($go=="vragenlijst") 

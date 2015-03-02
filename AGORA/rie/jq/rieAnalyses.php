@@ -20,15 +20,15 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 		$aard=mysqli_real_escape_string($link,$_POST[aard]);
 	
 	
-    switch ($actie)
-    {
-
-			case 'analyseLijstOverzicht':
-			
-			{
-				//hier gaan we de actieve vragen laten zien
-				
-				//query om de vragen op te halen
+        switch ($actie)
+        {
+    
+    			case 'analyseLijstOverzicht':
+    			
+    			{
+    			 
+            //VRAGEN LATEN ZIEN IN LIJST
+                //query om de vragen op te halen
 				$q_actieveVragen=
 				"select *
 				from rie_input
@@ -38,49 +38,54 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				$r_actieveVragen=mysqli_query($link, $q_actieveVragen);
 				if(mysqli_num_rows($r_actieveVragen)>"0")
 				{
-					print("
-					<table id='datatable'>
-						<thead>
-							<tr>
-								<td>Vraag</td>
-								<td>Evaluatie</td>
-								<td>Actie</td>
-							</tr>
-						</thead>
-					<tbody>
-							 ");
-				   
-				  while($lijst=mysqli_fetch_array($r_actieveVragen))
+				    print("<ul id='sortable1' class='connectedSortable'>
+                    
+                    ");
+                    
+				    while($lijst=mysqli_fetch_array($r_actieveVragen))
 						{
 							print("
-								<tr>
-									<td><b>+ ".$lijst[vraag]."</b></td>
-									<td><b>+ ".$lijst[type_input]."</b></td>
-									<td align='right'>
-										<a href='javascript:void(0);' 
-											onClick=\"vraagRie('wijzig','".$lijst[id]."');\">
-											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
-										&nbsp;  &nbsp;  &nbsp; 
-										<a href='javascript:void(0);' 
-											onClick=\"rieDeactiveer('actieveLijst','Vraag','".$lijst[id]."','');\">
-											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a>
-									</td>
-								</tr>
+								
+                                <li class='ui-state-default'>+ ".$lijst[vraag]."</li>
 									");                  
 						}
-				print("</table>");
+				
+					
+                   print("</ul>");
+                   
+                   //Onderdelen LATEN ZIEN IN LIJST
+               $q_actieveOnderdelen=
+				"select *
+				from rie_onderdeel
+				where actief =1
+				order by naam";
+				$r_actieveOnderdelen=mysqli_query($link, $q_actieveOnderdelen);
+				if(mysqli_num_rows($r_actieveOnderdelen)>"0")
+				{
+				    print("<ul id='sortable1' class='connectedSortable'>
+                    
+                    ");
+                    
+				    while($lijst=mysqli_fetch_array($r_actieveOnderdelen))
+						{
+							print("
+								
+                                <li class='ui-state-default'>+ ".$lijst[naam]."</li>
+									");                  
+						}
+				
+					
+                   print("</ul>");
                 
-				}//einde if(mysqli_num_rows($r_actieveVragen)>"0")
-                else print("Geen inhoud!");
-			}break;//einde case actievevragenlijst
-			
+    			}break;//einde case actievevragenlijst
+    			
+    		
+    			}
+            
+                }//einde switch($actie)
 		
-			
-        
-    }
-		
-	}
+	    }// einde if($_POST)
 	
+    }
 }
 else print("Sessie verlopen");
-	 
