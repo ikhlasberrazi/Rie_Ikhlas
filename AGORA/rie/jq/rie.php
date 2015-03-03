@@ -16,6 +16,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 		$id=mysqli_real_escape_string($link,$_POST[id]);
 		$vraag=mysqli_real_escape_string($link,$_POST[vraag]);
         $type_input=mysqli_real_escape_string($link, $_POST[evaluatie]);
+		$soort_vraag=mysqli_real_escape_string($link, $_POST[vraagSoort]);
 		$naam=mysqli_real_escape_string($link,$_POST[naam]);
 		$aard=mysqli_real_escape_string($link,$_POST[aard]);
 	
@@ -45,6 +46,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 							<tr>
 								<td>Vraag</td>
 								<td>Evaluatie</td>
+								<td>Soort Vraag</td>
 								<td>Actie</td>
 							</tr>
 						</thead>
@@ -57,6 +59,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 								<tr>
 									<td><b>+ ".$lijst[vraag]."</b></td>
 									<td><b>+ ".$lijst[type_input]."</b></td>
+									<td><b>+ ".$lijst[soort_vraag]."</b></td>
 									<td align='right'>
 										<a href='javascript:void(0);' 
 											onClick=\"vraagRie('wijzig','".$lijst[id]."');\">
@@ -79,11 +82,12 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 			case 'inactieveVragenlijst':
 			{
              print("
-                <table id='datatable'>
+                <table id='dataTable'>
                     <thead>
                         <tr>
                             <td>Vraag</td>
                             <td>Evaluatie</td>
+							<td>Soort vraag</td>
                             <td>Actie</td>
                         </tr>
                     </thead>
@@ -109,6 +113,9 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                                 </td>
                                 <td>
                                     <b>+ ".$lijst[type_input]."</b>
+                                </td>
+								<td>
+                                    <b>+ ".$lijst[soort_vraag]."</b>
                                 </td>
                                 <td align='right'>
                                     <a href='javascript:void(0);' onClick=\"rieActiveer('actieveLijst','Vraag','".$lijst[id]."');\">
@@ -153,12 +160,18 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     <br/>
 					Vraag: <input  type='text' name='vraag' value='".$vraag[vraag]."' size='75'><br/>
                     <br/>
+                    Welke soort vraag wil je?
+                    <select name='vraagSoort'>
+                      <option value'Geen'>Selecteer...</option>
+                      <option value='Open' "); if ($vraag[soort_vraag]=="Open") print(" SELECTED "); print(">Open Vraag</option>
+                      <option value='JaNee' "); if ($vraag[soort_vraag]=="JaNee") print(" SELECTED "); print(">Ja Nee Vraag</option>
+                    </select>
+					<br/>
                     Welke evaluatiemethode wil je bij deze vraag?
                     <select name='evaluatie'>
                       <option value'Geen'>Selecteer...</option>
                       <option value='RG' "); if ($vraag[type_input]=="RG") print(" SELECTED "); print(">Risicograaf</option>
                       <option value='Kinney' "); if ($vraag[type_input]=="Kinney") print(" SELECTED "); print(">Kinney methode</option>
-                      <option value='Guy' "); if ($vraag[type_input]=="Guy") print(" SELECTED "); print(">Guy Lenaerts</option>
                       <option value='kleur' "); if ($vraag[type_input]=="kleur") print(" SELECTED "); print(">Kleurencode</option>
                     </select>
                     <br/>
@@ -174,8 +187,8 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				{
 					//insert
 					$q_insert=
-                    "insert into rie_input (vraag, type_input, actief) 
-                    values('".$vraag."','".$type_input."','";
+                    "insert into rie_input (vraag, soort_vraag, type_input, actief) 
+                    values('".$vraag."','".$soort_vraag."','".$type_input."','";
 					if($_SESSION[aard]=="super") 
                         $q_insert.="1";
 					else $q_insert.="2";
@@ -201,7 +214,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					{
                         $q_update="
 							update rie_input 
-							set vraag='".$vraag."', type_input='".$type_input."'  
+							set vraag='".$vraag."', soort_vraag='".$soort_vraag."', type_input='".$type_input."'  
 							where id='".$id."'
 							";
 					}

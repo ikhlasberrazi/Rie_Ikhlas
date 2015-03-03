@@ -8,10 +8,14 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
     <h1>Beheer Rie vragen 
         &nbsp; &nbsp; &nbsp; 
     	<a href='javascript:void(0);' 
+            onClick=\"analyseLijst();\">
+            <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Audit
+        </a>
+        <a href='javascript:void(0);' 
             onClick=\"vraagRie('Vraag','');\">
             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
         </a>
-		<a href='javascript:void(0);' 
+      		<a href='javascript:void(0);' 
             onClick=\"onderdeelRie('Onderdeel','');\">
             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
         </a>
@@ -21,7 +25,6 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
     <br /><br />
     
     <script>analyseLijst();</script>
-     <div id='voegVraagToe'></div>
    	<div id='lijsten'></div>
     <div id='feedback'></div>");
     //functies uit rie.js vb #vragenLijst vullen vorige divs indien er data is
