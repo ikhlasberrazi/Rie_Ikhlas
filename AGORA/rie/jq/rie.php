@@ -41,7 +41,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				if(mysqli_num_rows($r_actieveVragen)>"0")
 				{
 					print("
-					<table id='datatable'>
+					<table id='dataTable'>
 						<thead>
 							<tr>
 								<td>Vraag</td>
@@ -290,7 +290,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				if(mysqli_num_rows($r_actieveOnderdelen)>"0")
 				{
 					print("
-					<table id='datatable'>
+					<table id='dataTable'>
 						<thead>
 							<tr>
 								<td>Onderdeel</td>
@@ -341,7 +341,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				if(mysqli_num_rows($r_inactieveOnderdelen)>"0")
 				{
 					print("
-					<table id='datatable'>
+					<table id='dataTable'>
 						<thead>
 							<tr>
 								<td>Onderdeel</td>

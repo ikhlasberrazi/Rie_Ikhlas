@@ -17,6 +17,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 		$vraag=mysqli_real_escape_string($link,$_POST[vraag]);
         $type_input=mysqli_real_escape_string($link, $_POST[evaluatie]);
 		$naam=mysqli_real_escape_string($link,$_POST[naam]);
+		$omschrijving=mysqli_real_escape_string($link,$_POST[omschrijving]);
 		$aard=mysqli_real_escape_string($link,$_POST[aard]);
         $lijstAudit = $_POST[Inhoud];
 	
@@ -45,7 +46,11 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     <br />
                     Naam van audit: <input type='text' name='naam' size='100'><br />
                     Omschrijving: <input type='text' name='omschrijving' size ='100'><br /> <br />
-                    ");
+					<a href='javascript:void(0);' 
+					onClick=\"opslaan();\">
+					<img src='".$_SESSION[http_images]."vink2.png'> Opslaan
+					</a>
+										");
                     
                         //Onderdelen LATEN ZIEN IN LIJST
                            $q_actieveOnderdelen=
@@ -104,10 +109,29 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                 
                 case 'analyseLijstOpslaan':
                 {
+                    //checken of het een nieuwe audit is of niet
+					
+					if($id=="")
+					{
+						$q_naarDB =
+						"insert into rie_audit (naam, omschrijving, inhoud, actief)
+						values('".$naam."','".$omschrijving."','volgorde komt','";
+						if($_SESSION[aard]=="super") 
+							$q_naarDB.="1";
+						else $q_naarDB.="2";
+						
+						$q_naarDB.="')";
+							
+						$r_naarDB = mysqli_query($link,$q_naarDB);
+						if($r_naarDB)
+						{
+							if($_SESSION[aard]=="super")print("Opgeslagen");
+							else print("Voorstel opgeslagen");
+						}
+						else print("opslaan mislukt");
+					}
+					
                     
-                    $output = array();
-                    $lijst = parse_str($lijstAudit, $output);
-                    print_r($output);
                 }break;//einde case opslaan van analyselijst
                 
                 
