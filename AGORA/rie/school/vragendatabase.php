@@ -18,7 +18,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
     </h1>
     <br /><br />
 	<script>laadLijst();</script>
-    <div id='voegVraagToe'></div>
+    <div id='laadForm'></div>
     <div id='accordion'>
 		<h3>Actieve vragen</h3>
 		<div id='vragenLijst'><img src='../images/progress.gif'></div>

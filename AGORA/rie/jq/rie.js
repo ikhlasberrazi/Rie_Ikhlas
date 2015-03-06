@@ -88,11 +88,11 @@ function vraagRie(actie, id)
         width: 600,
 		open:function() 
 		{
-					$("#voegVraagToe").html("<img src='../images/progress.gif' />");
+					$("#laadForm").html("<img src='../images/progress.gif' />");
 				
 					$.post("jq/rie.php",{actie:'vragenForm',id:id}, function(data) 
 					{
-					$("#voegVraagToe").html(data);
+					$("#laadForm").html(data);
 					});
 		},
 		buttons:
@@ -107,7 +107,7 @@ function vraagRie(actie, id)
 						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
-						$("#voegVraagToe").dialog("close");//divID in vragendatabase.php
+						$("#laadForm").dialog("close");//divID in vragendatabase.php
 						feedback(data);
 						laadLijst();
                         $('.input').keypress(function (e) {
@@ -123,9 +123,9 @@ function vraagRie(actie, id)
     };
 
 	
-	$("#voegVraagToe").dialog(dialogOpts);
-	$("#voegVraagToe").dialog({title: 'Vragen toevoegen: ' + actie});
-    $("#voegVraagToe").dialog("open");
+	$("#laadForm").dialog(dialogOpts);
+	$("#laadForm").dialog({title: 'Vragen toevoegen: ' + actie});
+    $("#laadForm").dialog("open");
 }//einde vraag rie
 
 function onderdeelRie(actie, id)
@@ -140,11 +140,11 @@ function onderdeelRie(actie, id)
 		open:function() 
 		{
 			
-				$("#voegVraagToe").html("<img src='../images/progress.gif' />");
+				$("#laadForm").html("<img src='../images/progress.gif' />");
 			
 				$.post("jq/rie.php",{actie:'onderdelenForm',id:id}, function(data) 
 				{
-				$("#voegVraagToe").html(data);
+				$("#laadForm").html(data);
 				
 				});
 			
@@ -161,7 +161,7 @@ function onderdeelRie(actie, id)
 						//alert("case opslaan onderdeel");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
-						$("#voegVraagToe").dialog("close");
+						$("#laadForm").dialog("close");
 						
 						feedback(data);
 						
@@ -176,8 +176,8 @@ function onderdeelRie(actie, id)
     };
 
 	
-	$("#voegVraagToe").dialog(dialogOpts);
-	$("#voegVraagToe").dialog({title: 'Onderdelen toevoegen: ' + actie});
-    $("#voegVraagToe").dialog("open");
+	$("#laadForm").dialog(dialogOpts);
+	$("#laadForm").dialog({title: 'Onderdelen toevoegen: ' + actie});
+    $("#laadForm").dialog("open");
 }//einde onderdeel rie
 

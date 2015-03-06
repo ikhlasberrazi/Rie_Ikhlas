@@ -17,8 +17,18 @@ function analyseLijst()
             maxWidth:$(window).width(),
             maxHeight: $(window).height()
             });
-        $( "#sortable3" ).sortable({items: "li:not(.ui-state-disabled)", update: function(event, ui){var postData = $(this).sortable('serialize'); console.log(postData)}}).disableSelection();
-        $( "#sortable1, #sortable2" ).sortable({connectWith: ".audit"}).disableSelection();
+        $( "#sortable3" ).sortable({
+				items: "li:not(.ui-state-disabled)", 
+				update: function(event, ui)
+					{var postData = $(this).sortable('serialize'); 
+					console.log(postData)}}).disableSelection();
+        $( "#sortable1, #sortable2" ).sortable({
+				connectWith: ".audit", 
+				remove: function(event, ui) {
+                ui.item.clone().appendTo('#sortable3');
+                $(this).sortable('cancel');
+            }
+        }).disableSelection();
       
     });//einde vragen laden
     
