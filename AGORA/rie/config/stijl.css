@@ -1,4 +1,4 @@
- #sortable1, #sortable3
+ #vragen_sortable, #audit_lijst
  {
     border: 1px solid #eee;
     width: 142px;
@@ -9,7 +9,7 @@
     float: left;
     margin-right: 10px;
 }
-#sortable2
+#onderdelen_sortable
 {
     border: 1px solid #FFFF99;
     width: 200px;
@@ -21,20 +21,22 @@
     margin-right: 10px;
 }
 
-#sortable1 li, #sortable3 li 
+#vragen_sortable li, #audit_lijst li 
 {
     margin: 0 5px 5px 5px;
     padding: 5px;
     font-size: 1em;
     width: 120px;
+	
 }
-#sortable2 li
+#onderdelen_sortable li
 {
      margin: 0 5px 5px 5px;
     padding: 5px;
     font-size: 1.4em;
     width: 150px;
 }
+
 
 body
 {

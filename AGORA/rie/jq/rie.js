@@ -38,7 +38,7 @@ function rieDeactiveer(casephp,aard,id)
 		$.post("jq/rie.php",{actie:'deactiveerVraag',aard:aard,id:id}, function(data) 
 		{
 			
-			if(aard=="actieveLijst") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
+			$('div#feedback').bind('dialogclose');
 			feedback(data);
 			laadLijst();
 		});
@@ -48,13 +48,23 @@ function rieDeactiveer(casephp,aard,id)
 		$.post("jq/rie.php",{actie:'deactiveerOnderdeel',aard:aard,id:id}, function(data) 
 		{
 			
-			if(aard=="actieveOnderdeel") $('div#feedback').bind('dialogclose', function(event) {location.reload(true); });
+			$('div#feedback').bind('dialogclose');
 			feedback(data);
 			laadLijst();
 		});
 	}
+	else if (casephp=='actieveAudit')
+	{
+		$.post("jq/rieAnalyses.php",{actie:'deactiveerAudit',aard:aard,id:id}, function(data) 
+		{
+			//alert("check");
+			$('div#feedback').bind('dialogclose');
+			feedback(data);
+			laadAuditTabel();
+		});
+	}
 	
-}// einde riedeactiveer vraag
+}// einde riedeactiveer 
 
 function rieActiveer(casephp,aard,id)
 {

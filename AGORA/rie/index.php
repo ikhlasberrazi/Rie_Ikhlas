@@ -38,6 +38,7 @@ if($_SESSION[login]=="wos_coprant")
 	<script type="text/javascript" src="../jq/jquery.cookie.js"></script>
 	<script type="text/javascript" src="../jq/jquery.dataTables.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+	<!--<script src="//johnny.github.io/jquery-sortable/js/jquery-sortable.js"></script>-->
 	<script type="text/javascript" src="../jq/uploader_html5.js"></script>
 	<script type="text/javascript" src="../jq/start.js.php"></script>
     
