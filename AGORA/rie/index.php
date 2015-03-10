@@ -41,6 +41,8 @@ if($_SESSION[login]=="wos_coprant")
 	<!--<script src="//johnny.github.io/jquery-sortable/js/jquery-sortable.js"></script>-->
 	<script type="text/javascript" src="../jq/uploader_html5.js"></script>
 	<script type="text/javascript" src="../jq/start.js.php"></script>
+	<script type="text/javascript" src="../jq/jquery.mjs.nestedSortable.js"></script>
+	
     
 
 

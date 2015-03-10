@@ -68,6 +68,8 @@ function rieDeactiveer(casephp,aard,id)
 
 function rieActiveer(casephp,aard,id)
 {
+	
+	//TODO casephp en actie nakijken voor kortere code
 	if(casephp=='actieveLijst')
 	{
 		$.post("jq/rie.php",{actie:'activeerVraag',aard:aard,id:id}, function(data) 
