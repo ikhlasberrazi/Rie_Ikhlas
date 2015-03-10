@@ -3,3 +3,8 @@ http://stackoverflow.com/questions/15633341/jquery-ui-sortable-then-write-order-
 https://www.youtube.com/watch?v=3mOs0VY_sIw
 
 http://localhost:8080/agora/rie/index.php?pad=school&go=vragenlijst
+
+https://www.google.be/webhp?sourceid=chrome-instant&rlz=1C1PRFE_enBE616BE630&ion=1&espv=2&es_th=1&ie=UTF-8#q=jquery+sortable+list+within+list
+http://stackoverflow.com/questions/6940390/how-do-i-duplicate-item-when-using-jquery-sortable
+
+http://stackoverflow.com/questions/15633341/jquery-ui-sortable-then-write-order-into-a-database
