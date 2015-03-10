@@ -28,6 +28,29 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                 case 'nieuweAudit':
                     
                 {
+					$q_vraag=
+                    "select * 
+                    from rie_input 
+                    where id='52' limit 1";
+					//print($q_vraag."<br />");
+					$r_vraag=mysqli_query($link,$q_vraag);
+					if(mysqli_num_rows($r_vraag)=="1")
+					{
+						$vraag=mysqli_fetch_array($r_vraag);
+					}
+					else $vraag=array();
+					
+					
+					$q_onderdeel=
+                    "select * 
+                    from rie_onderdeel 
+                    where id='1' limit 1";
+					$r_onderdeel=mysqli_query($link,$q_onderdeel);
+					if(mysqli_num_rows($r_onderdeel)=="1")
+					{
+						$onderdeel=mysqli_fetch_array($r_onderdeel);
+					}
+					else $onderdeel=array();
 					
 					if ($id!="")
 					{
@@ -65,59 +88,22 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     <br />
                     Naam van audit: <input type='text' name='naam' value='".$audit[naam]."' size='100'><br />
                     Omschrijving: <input type='text' name='omschrijving' value='".$audit[omschrijving]."' size ='100'><br /> <br />
-					
+					<div id='onderdeelDIV' >
+							<input type='text' name='onderdeel' size='50' value='".$onderdeel[naam]."' readonly >&nbsp; &nbsp;<button>Edit</button> <br />
+							
+						</div>
+						
+					<div id='vraagDIV'>
+							<input type='text' name='vraag' size='100' value='".$vraag[vraag]."' readonly > &nbsp; &nbsp; <button>Edit</button><br />
+							<form action=''>
+								<input type='radio' name='Open' value='ja'>Ja
+								<input type='radio' name='Open' value='nee'>Nee
+								<input type='radio' name='Open' value='nvt'>NVT
+							</form><br />
+							<textarea id ='antwoordOpen' rows='5' cols='80' id='TITLE'>
+							</textarea>
 					</form>
-										");
-                    
-                        //Onderdelen LATEN ZIEN IN LIJST
-                           $q_actieveOnderdelen=
-            				"select *
-            				from rie_onderdeel
-            				where actief =1
-            				order by naam";
-            				$r_actieveOnderdelen=mysqli_query($link, $q_actieveOnderdelen);
-            				if(mysqli_num_rows($r_actieveOnderdelen)>"0")
-            				{
-            				    print("<ul id='onderdelen_sortable' class='connectedSortable'>
-                                
-                                ");
-            				    while($lijst=mysqli_fetch_array($r_actieveOnderdelen))
-            						{
-            							print("
-            								
-                                            <li class='ui-state-default'>+ ".$lijst[naam]."</li>
-            									");                  
-            						}
-                               print("</ul>");
-            			     }
-                             
-                        //VRAGEN LATEN ZIEN IN LIJST
-                            //query om de vragen op te halen
-            				$q_actieveVragen=
-            				"select *
-            				from rie_input
-            				where actief =1
-            				order by vraag";
-            				
-            				$r_actieveVragen=mysqli_query($link, $q_actieveVragen);
-            				if(mysqli_num_rows($r_actieveVragen)>"0")
-            				{
-            				    print("<ul id='vragen_sortable' class='connectedSortable'>
-                                
-                                ");
-                                
-            				    while($lijst=mysqli_fetch_array($r_actieveVragen))
-            						{
-            							print("
-            								
-                                            <li  class='ui-state-default'>+ ".$lijst[vraag]."</li>
-            									");                  
-            						}
-                               print("</ul>");
-                            }//einde if r_activevragenlijst
-                   
-    			    print("<ul id='audit_lijst' class='audit'><li class='ui-state-default ui-state-disabled'>Nieuwe lijst</li></ul>");
-                    print("</div>"); //einde dialog div
+				</div>"); //einde dialog div
                     
                     
                     

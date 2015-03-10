@@ -34,20 +34,6 @@ function analyseLijst(id)
 					
 				});
 				
-				//begin lijst sortable maken
-				$( "#audit_lijst" ).sortable({
-						items: "li:not(.ui-state-disabled)", 
-						update: function(event, ui)
-							{var postData = $(this).sortable('serialize'); 
-							console.log(postData)}}).disableSelection();
-				//zorgen dat de eerste twee tabellen blijven en dat een kloon wordt opgeslagen in tabel 3
-				$( "#vragen_sortable, #onderdelen_sortable" ).sortable({
-						connectWith: ".audit", 
-						remove: function(event, ui) {
-						ui.item.clone().appendTo('#audit_lijst');
-						$(this).sortable('cancel');
-					}
-				}).disableSelection();
 			  
 			});//einde vragen laden
 		
