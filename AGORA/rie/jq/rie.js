@@ -29,8 +29,6 @@ function laadLijst()
 	});
 }//einde laadvragenlijst
 
-//
-
 function rieDeactiveer(casephp,aard,id)
 {
 	if (casephp=='actieveLijst')
@@ -90,7 +88,7 @@ function rieActiveer(casephp,aard,id)
 	}
 }//einde rieActiveer
 
-function vraagRie(actie, id)
+function nieuwDeel(actie, id, soort, form)
 {
     var dialogOpts = 
 	{
@@ -102,7 +100,7 @@ function vraagRie(actie, id)
 		{
 					$("#laadForm").html("<img src='../images/progress.gif' />");
 				
-					$.post("jq/rie.php",{actie:'vragenForm',id:id}, function(data) 
+					$.post("jq/rie.php",{actie:actie,id:id,form:form}, function(data) 
 					{
 					$("#laadForm").html(data);
 					});
@@ -113,7 +111,7 @@ function vraagRie(actie, id)
 			{				
 				
 					
-					$.post("jq/rie.php",$("#VragenFormID").serialize(), function(data) 
+					$.post("jq/rie.php",$(form).serialize(), function(data) 
 					{
 					   
 						//alert("case opslaan");
@@ -136,60 +134,7 @@ function vraagRie(actie, id)
 
 	
 	$("#laadForm").dialog(dialogOpts);
-	$("#laadForm").dialog({title: 'Vragen toevoegen: ' + actie});
+	$("#laadForm").dialog({title: 'Nieuw toevoegen: ' + soort});
     $("#laadForm").dialog("open");
 }//einde vraag rie
-
-function onderdeelRie(actie, id)
-{
-  
-	var dialogOpts = 
-	{
-        modal: true,
-        autoOpen: false,
-        height: 200,
-        width: 600,
-		open:function() 
-		{
-			
-				$("#laadForm").html("<img src='../images/progress.gif' />");
-			
-				$.post("jq/rie.php",{actie:'onderdelenForm',id:id}, function(data) 
-				{
-				$("#laadForm").html(data);
-				
-				});
-			
-			
-			
-		},
-		buttons:
-		{
-			"Opslaan": function() 
-			{				
-				
-					$.post("jq/rie.php",$("#onderdelenFormID").serialize(), function(data) 
-					{
-						//alert("case opslaan onderdeel");
-						feedback("<center><img src='../images/progress.gif'></center>");
-						
-						$("#laadForm").dialog("close");
-						
-						feedback(data);
-						
-						laadLijst();
-					});
-					
-					
-				
-                
-			}//einde opslaan
-		}
-    };
-
-	
-	$("#laadForm").dialog(dialogOpts);
-	$("#laadForm").dialog({title: 'Onderdelen toevoegen: ' + actie});
-    $("#laadForm").dialog("open");
-}//einde onderdeel rie
 

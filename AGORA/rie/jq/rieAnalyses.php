@@ -77,11 +77,11 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     <input type='hidden' name='id' value='".$id."'>
 				    <br />
                         <a href='javascript:void(0);' 
-                            onClick=\"vraagRie('Vraag','');\">
+                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID');\">
                             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
                         </a>
                 		<a href='javascript:void(0);' 
-                            onClick=\"onderdeelRie('Onderdeel','');\">
+                            onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
                             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
                         </a>
                     <br />
