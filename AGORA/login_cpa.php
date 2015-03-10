@@ -23,6 +23,6 @@
 
 <script>
 
-    window.location.assign("http://localhost:8080/agora/rie/index.php");
+    window.location.assign("http://localhost:8080/agora/vik/index.php");
 
 </script>

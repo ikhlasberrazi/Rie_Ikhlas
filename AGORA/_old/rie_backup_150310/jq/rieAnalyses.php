@@ -12,8 +12,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
     //SQL injection tegengaan in POST 
 	if($_POST)
 	{ 
-		$actie=$_POST[actie];
-		$form=$_POST[form];
+		$actie=$_POST[actie];	
 		$id=mysqli_real_escape_string($link,$_POST[id]);
 		$vraag=mysqli_real_escape_string($link,$_POST[vraag]);
         $type_input=mysqli_real_escape_string($link, $_POST[evaluatie]);
@@ -55,11 +54,11 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     <input type='hidden' name='id' value='".$id."'>
 				    <br />
                         <a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('vragenForm','', 'Vraag', '#VragenFormID');\">
+                            onClick=\"vraagRie('Vraag','');\">
                             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
                         </a>
                 		<a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('onderdelenForm','', 'Onderdeel','#onderdelenFormID');\">
+                            onClick=\"onderdeelRie('Onderdeel','');\">
                             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
                         </a>
                     <br />
@@ -68,7 +67,57 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     Omschrijving: <input type='text' name='omschrijving' value='".$audit[omschrijving]."' size ='100'><br /> <br />
 					
 					</form>
-					</div>"); //einde dialog div
+										");
+                    
+                        //Onderdelen LATEN ZIEN IN LIJST
+                           $q_actieveOnderdelen=
+            				"select *
+            				from rie_onderdeel
+            				where actief =1
+            				order by naam";
+            				$r_actieveOnderdelen=mysqli_query($link, $q_actieveOnderdelen);
+            				if(mysqli_num_rows($r_actieveOnderdelen)>"0")
+            				{
+            				    print("<ul id='onderdelen_sortable' class='connectedSortable'>
+                                
+                                ");
+            				    while($lijst=mysqli_fetch_array($r_actieveOnderdelen))
+            						{
+            							print("
+            								
+                                            <li class='ui-state-default'>+ ".$lijst[naam]."</li>
+            									");                  
+            						}
+                               print("</ul>");
+            			     }
+                             
+                        //VRAGEN LATEN ZIEN IN LIJST
+                            //query om de vragen op te halen
+            				$q_actieveVragen=
+            				"select *
+            				from rie_input
+            				where actief =1
+            				order by vraag";
+            				
+            				$r_actieveVragen=mysqli_query($link, $q_actieveVragen);
+            				if(mysqli_num_rows($r_actieveVragen)>"0")
+            				{
+            				    print("<ul id='vragen_sortable' class='connectedSortable'>
+                                
+                                ");
+                                
+            				    while($lijst=mysqli_fetch_array($r_actieveVragen))
+            						{
+            							print("
+            								
+                                            <li  class='ui-state-default'>+ ".$lijst[vraag]."</li>
+            									");                  
+            						}
+                               print("</ul>");
+                            }//einde if r_activevragenlijst
+                   
+    			    print("<ul id='audit_lijst' class='audit'><li class='ui-state-default ui-state-disabled'>Nieuwe lijst</li></ul>");
+                    print("</div>"); //einde dialog div
                     
                     
                     
