@@ -38,7 +38,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     from rie_input 
                     where id='".$id_laatste_vraag."' limit 1";
 					
-					print($id_laatste_vraag."<br />");
+					//print($id_laatste_vraag."<br />");
 					$r_vraag=mysqli_query($link,$q_vraag);
 					if(mysqli_num_rows($r_vraag)=="1")
 					{
@@ -81,7 +81,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						
 				
                     print("
-                    <div id='nieuweForm' title='Audit samenstellen'>
+                    
                     <form id='auditFormID'>
                     <input type='hidden' name='actie' value='analyseLijstOpslaan'>
                     <input type='hidden' name='id' value='".$id."'>
@@ -90,30 +90,35 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     Omschrijving: <input type='text' name='omschrijving' value='".$audit[omschrijving]."' size ='100'><br /> <br />
 					Categorie: <input type='text' name='categorie' value='' size ='75'><br /> <br />
 					
-				
-					<div id='onderdeelDIV' >
-							Onderdeel: <input type='text' name='onderdeel' size='50' value='".$id_laatste_onderdeel."' readonly >&nbsp; &nbsp;
-							<a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
-                            <img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
-							</a>
-							
-                           <br />
-							
-						</div>
-						
-					<div id='vraagDIV'>
-							Vraag: <input type='text' name='vraag' size='100' value='".$id_laatste_vraag."' readonly > &nbsp; &nbsp; 
+					</form>
+					");
+					
+					$onderdeelDIV="<div>Onderdeel: <input readonly><br />";
+					
+			
+					
+					
+					$onderdeelVastDIV="<div id='onderdeelDIV' >
+											Onderdeel: <input type='text' name='onderdeel' size='50' value='' readonly >&nbsp; &nbsp;
+											<a href='javascript:void(0);' 
+											onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID', '".$onderdeelDIV."');\">
+											<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
+											</a>
+											<br />
+										</div>";
+					print($onderdeelVastDIV);
+					
+					$vraagDIV="<div>Vraag: <input readonly><br />";
+					
+					$vraagVastDIV="<div id='vraagDIV'>
+							Vraag: <input type='text' name='vraag' size='100' value='' readonly > &nbsp; &nbsp; 
 						<a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID');\">
+                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
                             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
                         </a>
 						<a href='javascript:void(0);' 
 							onClick=\"analyseLijst('wijzig','".$lijst[id]."');\">
 							<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
-						
-						
-												
 						<br />
 						<br />							
 							<form action=''>
@@ -125,16 +130,16 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 							<textarea id ='antwoordOpen' rows='5' cols='80' id='TITLE'>
 							</textarea>
 							
-							<!-- test om div toe te voegen -->
-							<br /><a class='add' href='javascript:void(0);' onClick=\"voegToe();\">Add</a>
-							<div id='spin'></div>
-							
-						
-							
-					</div>
+					</div>";
+					print($vraagVastDIV);
 					
-					</form>
-				</div>"); //einde dialog div
+					
+					print("<!-- test om div toe te voegen -->
+							<br />
+							<div id='spin'></div>");
+					
+					
+				
                     
                     
                     

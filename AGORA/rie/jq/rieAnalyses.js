@@ -17,10 +17,12 @@ function analyseLijst(actie,id)
 //testcode
 
 
-function voegToe()
+function voegToe(soort, tekst)
 {
-	$("#spin").append("<div>Test</div>");
-
+	if(soort =="Onderdeel")
+		$("#spin").append(tekst);
+	else if (soort=="Vraag")
+		$("#spin").append(tekst);
 }
 //einde testcode
 function laadAuditTabel()
@@ -36,8 +38,8 @@ function laadAuditTabel()
 		 
 }
 
-function nieuwDeel(actie, id, soort, form)
-{
+function nieuwDeel(actie, id, soort, form, tekst)
+{alert(tekst);
     var dialogOpts = 
 	{
         modal: true,
@@ -64,7 +66,7 @@ function nieuwDeel(actie, id, soort, form)
 					   
 						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
-						
+						voegToe(soort, tekst);
 						$("#laadForm").dialog("close");//divID in vragendatabase.php
 						feedback(data);
 						

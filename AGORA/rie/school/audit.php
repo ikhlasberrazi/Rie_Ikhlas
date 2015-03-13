@@ -18,7 +18,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
     <br /><br />
     
     <script>analyseLijst();</script>
-   	<div id='lijsten'></div>
+   	
 	<div id='patat'></div>
 	<div id='laadForm'></div>
     <div id='feedback'></div>");
