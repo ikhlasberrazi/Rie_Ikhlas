@@ -25,12 +25,6 @@ if(($_SESSION[aard]=="super") and ($_SESSION[school_id]=="0"))
                     print(" id='menu_actief'"); 
                     print("><span>Meldingen</span></a>
                 </li> 
-				<li>
-                    <a href='index.php?pad=school&go=audit'"); 
-                    if($go=="audit") 
-                    print(" id='menu_actief'"); 
-                    print("><span>audit</span></a>
-                </li> 
                 
                 <strong></strong>
         	</ul>

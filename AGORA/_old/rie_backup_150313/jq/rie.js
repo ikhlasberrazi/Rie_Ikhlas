@@ -119,7 +119,10 @@ function nieuwDeel(actie, id, soort, form)
 						
 						$("#laadForm").dialog("close");//divID in vragendatabase.php
 						feedback(data);
-						laadLijst();
+						//analyseLijst();
+						
+					
+						
                         $('.input').keypress(function (e) {
                           if (e.which == 13) {
                             $('form#login').submit();

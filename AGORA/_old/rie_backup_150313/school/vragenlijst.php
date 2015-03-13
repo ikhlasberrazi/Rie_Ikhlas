@@ -17,11 +17,9 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
     </h1>
     <br /><br />
     
-    <script>laadAuditTabel();analyseLijst();</script>
+    <script>laadAuditTabel();</script>
    	<div id='lijsten'></div>
-	
 	<div id='auditTabel'></div>
-	<div id='dialog'></div>
 	<div id='laadForm'></div>
     <div id='feedback'></div>");
     //functies uit rie.js vb #vragenLijst vullen vorige divs indien er data is
