@@ -36,6 +36,40 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                 {
                  	
 					
+					
+					/* //query naar vragen om deze terug op te halen in het inputveld	
+					$q_vraag=
+                    "select * 
+                    from rie_input 
+                    where id='".$id_laatste_vraag."' 
+					limit 1";
+					
+					print("laatste id is: ");
+					print($id_laatste_vraag);
+					
+					
+					$r_vraag=mysqli_query($link,$q_vraag);
+					if(mysqli_num_rows($r_vraag)=="1")
+					{
+						$vraag=mysqli_fetch_array($r_vraag);
+					}
+					else $vraag=array();
+					
+					//query naar onderdelen om deze terug op te halen in het inputveld
+					$q_onderdeel=
+                    "select * 
+                    from rie_onderdeel 
+                    where id='".$id_laatste_onderdeel."' 
+					limit 1";
+					
+					$r_onderdeel=mysqli_query($link,$q_onderdeel);
+					if(mysqli_num_rows($r_onderdeel)=="1")
+					{
+						$onderdeel=mysqli_fetch_array($r_onderdeel);
+					}
+					else $onderdeel=array(); */
+						
+					
 					print("<br />ik ben hier<br />");	
 					print($id);	
 					//nazien of de audit al niet bestaat en als het al bestaat de audit te wijzigen
@@ -64,7 +98,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     <form id='auditFormID'>
                     <input type='hidden' name='actie' value='analyseLijstOpslaan'>
                     <input type='hidden' name='id' value='".$id."'>
-                    
+                    <input type='hidden' name='Categorie' value='".$categorie."'
 				    <br />
                     Naam van audit: <input type='text' name='naam' value='".$audit[naam]."' size='100'><br /><br />
                     Omschrijving: <input type='text' name='omschrijving' value='".$audit[omschrijving]."' size ='100'><br /> <br />
@@ -79,7 +113,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					$onderdeelVastDIV="<div id='borderDIV' >
 											Onderdeel: <input type='text'  size='50' value='Voorbeeld onderdeel' readonly >&nbsp; &nbsp;
 											<a href='javascript:void(0);' 
-											onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
+											onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID', '".$onderdeelDIV."','".$onderdeelInput."');\">
 											<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
 											</a>
 											<a href='javascript:void(0);' 
@@ -87,10 +121,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 							<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 											<br />
 										</div>";
-					/*$print("<a href='javascript:void(0);' 
-											onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
-											<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
-											</a>");*/
+					print($onderdeelVastDIV);
 					
 					$vraagDIV="<div>Vraag: <input readonly><br />";
 					
@@ -115,15 +146,12 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 							</textarea>
 							
 					</div>";
-					/*print("<a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
-                            <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
-                        </a><br /><br />");
+					print($vraagVastDIV);
 					
 					print("<div><h2>Nieuw samengestelde audit</h2></div>");
 					print("<!-- test om div toe te voegen -->
 							<br />
-							<div id='spin'></div>");*/
+							<div id='spin'></div>");
 					
 					
 
@@ -151,10 +179,10 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						$r_naarDB = mysqli_query($link,$q_naarDB);
 						if($r_naarDB)
 						{
-							if($_SESSION[aard]=="super")print("<br /><br /><br /><h2><font color=green><center>Begin met succes opgeslagen!</center></font></h2>");
+							if($_SESSION[aard]=="super")print("<br /><br /><br /><h2><font color=green><center>Onderdeel met succes opgeslagen!</center></font></h2>");
 							else print("<br /><br /><br /><h2><font color=green><center>Voorstel tot wijziging met succes opgeslagen!</center></font></h2>");
 						}
-						else print("<br /><br /><br /><h2><font color=red><center>Begin opslaan MISLUKT!</center></font></h2>");
+						else print("<br /><br /><br /><h2><font color=red><center>Onderdeel opslaan MISLUKT!</center></font></h2>");
 					}
 					else 
 					{
@@ -178,11 +206,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                 
                 
                 
-                case 'auditAppend':
-                {
-					print("in append case");
-					
-				}break;
+                
                 
                 
                 

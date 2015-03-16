@@ -5,8 +5,8 @@ function analyseLijst(actie,id)
 	{
         modal: true,
         autoOpen: false,
-        height: 300,
-        width: 700,
+        height: 600,
+        width: 1200,
 		open:function() 
 		{
 			$.post("jq/rieAnalyses.php",{actie:'nieuweAudit', id:id}, function(data) 
@@ -22,13 +22,11 @@ function analyseLijst(actie,id)
 			{
 				$.post("jq/rieAnalyses.php",$("#auditFormID").serialize(), function(data) 
 					{
-					   dialog2();
-					   //alert("case opslaan");
+					   
+						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
+						
 						feedback(data);
-						
-						
-						//$("#dialog").dialog("close");
 						
                         $('.input').keypress(function (e) {
                           if (e.which == 13) {
@@ -37,11 +35,7 @@ function analyseLijst(actie,id)
                           }
                         });
 						
-					});//
-			},
-			"Sluiten": function()
-			{
-				$(this).dialog("close");
+					});$(this).dialog("close");
 			}
 		}
 	};
@@ -57,39 +51,6 @@ function analyseLijst(actie,id)
 }//einde laadvragenlijst
 
 
-function dialog2(actie)
-{
- 	alert("in dialoog2");
-	var dialogOpts = 
-	{
-        modal: true,
-        autoOpen: false,
-        height: 600,
-        width: 800,
-		open:function() 
-		{
-			$.post("jq/rieAnalyses.php",{actie:'auditAppend'}, function(data) 
-			{
-				
-				//alert("in openfunction");
-				$("#dialog2").html(data);
-			
-			});
-		},buttons:
-		{
-			"Sluiten": function()
-			{
-				$(this).dialog("close");
-			}
-		}
-	};
-
-	
-	$("#dialog2").dialog(dialogOpts);
-	$("#dialog2").dialog({title: 'Nieuwe audit toevoegen '});
-    $("#dialog2").dialog("open");
-	
-}
 
 function voegToe(soort, tekst, onderdeel )
 {
