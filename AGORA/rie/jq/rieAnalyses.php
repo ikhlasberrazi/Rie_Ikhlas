@@ -68,7 +68,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					</form>
 					");
 					
-					$onderdeelDIV="<div>Onderdeel: <input readonly> <br /></div>";
+					/*$onderdeelDIV="<div>Onderdeel: <input readonly> <br /></div>";
 					//	$onderdeelDIV="<div>Onderdeel: '".$onderdeel."'<br /></div>";
 					//	$onderdeelDIV="<div>Onderdeel: <input readonly> <br /></div>";
 					$onderdeelVastDIV="<div id='borderDIV' >
@@ -81,13 +81,14 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 							onClick=\"analyseLijst('wijzig','".$lijst[id]."');\">
 							<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 											<br />
-										</div>";
+										</div>";*/
+										
 					/*$print("<a href='javascript:void(0);' 
 											onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
 											<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
 											</a>");*/
 					
-					$vraagDIV="<div>Vraag: <input readonly><br />";
+					/*$vraagDIV="<div>Vraag: <input readonly><br />";
 					
 					$vraagVastDIV="<div id='borderDIV' >
 							Vraag: <input type='text' name='vraag' size='100' value='Voorbeeld vraag' readonly > &nbsp; &nbsp; 
@@ -109,7 +110,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 							<textarea id ='antwoordOpen' rows='5' cols='80' id='TITLE'>
 							</textarea>
 							
-					</div>";
+					</div>";*/
 					/*print("<a href='javascript:void(0);' 
                             onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
                             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
@@ -120,13 +121,16 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 							<br />
 							<div id='spin'></div>");*/
 					
-					
-
-                    
-                    
-                    
                 }break;//einde nieuwe audit
                  
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 case 'analyseLijstOpslaan':
                 {
@@ -144,17 +148,16 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						$q_naarDB.="')";
 						$r_naarDB = mysqli_query($link,$q_naarDB);
 						
-						
 						$laatsteAuditID =mysqli_insert_id($link);
-						print($laatsteAuditID);
+					
 						
-						
- 						if($r_naarDB) 						
+					//bevestiging van succes naar db of niet	
+ 					/*if($r_naarDB) 						
 						 {
 							if($_SESSION[aard]=="super")print("<br /><br /><br /><h2><font color=green><center>Beschrijving met 	succes opgeslagen!</center></font></h2>");
  							else print("<br /><br /><br /><h2><font color=green><center>Voorstel tot wijziging met succes opgeslagen!</center></font></h2>");
  						}
-						else print("<br /><br /><br /><h2><font color=red><center>Begin opslaan MISLUKT!</center></font></h2>"					);
+						else print("<br /><br /><br /><h2><font color=red><center>Begin opslaan MISLUKT!</center></font></h2>"					);*/
 
 					}
 					else 
@@ -179,27 +182,66 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                 
                 
                 
+                
+               
+                
+                
+                
+                
                 case 'auditAppend':
                 {
                  
-                 	
+                 if($id=='')
+                 {
+					
+					
+				
+                 	print("<div id='titel'><h2>Nieuw samengestelde audit</h2></div>");
 					print("<a href='javascript:void(0);' 
 							onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
 							<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
 							</a>");
-					print("<a href='javascript:void(0);' 
+					print("<div id='onderdeelDIV'></div><br />");
+					
+					/*print("<a href='javascript:void(0);' 
                             onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
                             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
-                        </a><br /><br />");
+                        </a><br /><br />");*/
 					
-					print("<div><h2>Nieuw samengestelde audit</h2></div>");
 					
-					print("<!-- test om div toe te voegen -->
-							<br />
-							<div id='spin'></div><br />");
-							
+					
+					print("<br /><div id='spin'></div><br />");
+				}
+				else
+				{
+					print("<div id='titel'><h2>Nieuw samengestelde audit ID = '".$id."'</h2></div>");
+					$q_onderdeel="
+					select *
+					from rie_onderdeel
+					where id_audit='".$id."'";
+					$r_onderdeel = mysqli_query($link,$q_onderdeel);
+					
+					if(mysqli_num_rows($r_onderdeel)>"0")
+					{
+						$onderdeel=mysqli_fetch_array($r_onderdeel);
+						
+					}
+					else $onderdeel=array(); 
+					
+					print("'".$onderdeel[naam]."'");
+				}	
 					
 				}break;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 //komende van dialog2() opslaan functie
                 case 'weergave':
@@ -207,6 +249,14 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					
 					
 				}break; //einde weergave
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
     			case 'actieveAuditLijst':
@@ -333,9 +383,41 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				
 				
 				
+				case 'deactiveerVraag':
+				{
+					
+					
+					$q_deactiveer="delete from rie_input where id='".$id."'";
+					$r_deactiveer=mysqli_query($link,$q_deactiveer);
+					
+					if($r_deactiveer) 
+					{
+						print("<br /><br /><br /><center><h2><font color=green>".ucfirst($aard)." met succes gedeactiveerd!</font></center></h2>");
+					}
+					else
+					{
+						print("<br /><br /><br /><center><h2><font color=red>".ucfirst($aard)." niet gedeactiveerd!</font></center></h2>");
+					}
+					
+				}break;	//einde deactiveren
 				
-				
-				
+				case 'deactiveerOnderdeel':
+				{
+					
+					$q_deactiveer="delete from rie_onderdeel where id='".$id."'";
+					$r_deactiveer=mysqli_query($link,$q_deactiveer);
+					
+					if($r_deactiveer) 
+					{
+					 	//print($id);
+						print("<br /><br /><br /><center><h2><font color=green>".ucfirst($aard)." met succes gedeactiveerd!</font></center></h2>");
+					}
+					else
+					{
+						print("<br /><br /><br /><center><h2><font color=red>".ucfirst($aard)." niet gedeactiveerd!</font></center></h2>");
+					}
+					
+				}break;	//einde deactiveren
 				
 				
 				
@@ -459,11 +541,11 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						$r_update_sort=mysqli_query($link,$q_update_sort);
 											
 						print("<div id='vraagAppend' hidden><br />Vraag :<input value='".$vraagAppend[vraag]."' readonly><a href='javascript:void(0);' 
-											onClick=\"analyseLijst('Wijzig','".$lijst[id]."');\">
+											onClick=\"analyseLijst('Wijzig','".$laatsteVraagID."');\">
 											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 										&nbsp;  &nbsp;  &nbsp; 
 										<a href='javascript:void(0);' 
-											onClick=\"rieDeactiveer('actieveAudit','Audit','".$lijst[id]."','');\">
+											onClick=\"rieDeactiveer('actieveLijst','Vraag','".$laatsteVraagID."');\">
 											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a></div>");
 						
 						
@@ -591,7 +673,14 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						$r_insert=mysqli_query($link,$q_insert);
 						
 						$laatsteOnderdeelID = mysqli_insert_id($link);
+						$q_update_sort="
+								update rie_onderdeel 
+								set id_sort_onderdeel='".$laatsteOnderdeelID."'  
+								where id='".$laatsteOnderdeelID."'
+								";
+						$r_update_sort=mysqli_query($link,$q_update_sort);
 						
+						//laatste onderdeel uithalen en weergeven
 						$q_onderdeelAppend ="
 						select *
 						from rie_onderdeel
@@ -605,7 +694,18 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						else $onderdeelAppend=array();
 						
 											
-						print("<div id='onderdeelAppend' hidden><br />Onderdeel :<input value='".$onderdeelAppend[naam]."' readonly><a href='javascript:void(0);' onClick=\"analyseLijst('Wijzig','".$lijst[id]."');\">	<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> &nbsp;  &nbsp;  &nbsp; 	<a href='javascript:void(0);' 	onClick=\"rieDeactiveer('actieveAudit','Audit','".$lijst[id]."','');\">	<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a></div> ");
+						print("<div id='onderdeelAppend' hidden><br />
+						Onderdeel :<input value='".$onderdeelAppend[naam]."' readonly>
+						<a href='javascript:void(0);' 
+							onClick=\"nieuwDeel('onderdelenForm','".$laatsteOnderdeelID."');\">	
+							<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
+						&nbsp;  &nbsp;  &nbsp; 	
+						<a href='javascript:void(0);' 	
+							onClick=\"rieDeactiveer('actieveOnderdeel','Onderdeel','".$laatsteOnderdeelID."');\">	<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a>
+						<a href='javascript:void(0);' 
+                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
+                            <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
+                        </a><br /></div> ");
 						
 						if($r_insert) 
 						{
@@ -617,7 +717,6 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						else print ("mislukt");
 						//else print("<br /><br /><br /><h2><font color=red><center>Onderdeel opslaan MISLUKT!</center></font></h2>");
 					}
-					
 					
 					
 					else

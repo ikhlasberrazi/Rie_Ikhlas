@@ -25,10 +25,10 @@ function analyseLijst(actie,id)
 						//alert("case opslaan");
 						
 						
-						feedback("<center><img src='../images/progress.gif'></center>");
-						feedback(data);
-						
-						dialog2();
+						//feedback("<center><img src='../images/progress.gif'></center>");
+						//feedback(data);
+						laadAuditTabel();
+						dialog2(id);
 						$("#dialog").dialog("close");
 						
                         $('.input').keypress(function (e) {
@@ -53,8 +53,8 @@ function analyseLijst(actie,id)
 }//einde laadvragenlijst
 
 
-function dialog2(actie)
-{
+function dialog2(id)
+{	//alert(id);
  	//alert("in dialoog2");
 	var dialogOpts = 
 	{
@@ -64,7 +64,7 @@ function dialog2(actie)
         width: 800,
 		open:function() 
 		{
-			$.post("jq/rieAnalyses.php",{actie:'auditAppend'}, function(data) 
+			$.post("jq/rieAnalyses.php",{actie:'auditAppend', id:id}, function(data) 
 			{
 				
 				//alert("in openfunction");
@@ -102,14 +102,17 @@ function voegToe(soort )
 	{
 		var a=$('#onderdeelAppend').html();
 		
-		$("#spin").append(a);
+		$("#onderdeelDIV").append(a);
 		//alert(soort);
 	}
 	else if (soort=="Vraag")
 	{
 		var b=$('#vraagAppend').html();
+		
 		//$("#spin").append(number);
+		//$("#spin").append("$nbsp");
 		$("#spin").append(b);
+		
 	}
 			
 	
@@ -191,20 +194,20 @@ function rieDeactiveer(casephp,aard,id)
 	{
 		$.post("jq/rieAnalyses.php",{actie:'deactiveerVraag',aard:aard,id:id}, function(data) 
 		{
-			
+			//alert(id);
 			$('div#feedback').bind('dialogclose');
 			feedback(data);
-			laadLijst();
+			
 		});
 	}
 	else if(casephp=='actieveOnderdeel')
 	{
 		$.post("jq/rieAnalyses.php",{actie:'deactiveerOnderdeel',aard:aard,id:id}, function(data) 
 		{
-			
+			alert(id);
 			$('div#feedback').bind('dialogclose');
 			feedback(data);
-			laadLijst();
+			
 		});
 	}
 	else if (casephp=='actieveAudit')
@@ -217,6 +220,7 @@ function rieDeactiveer(casephp,aard,id)
 			laadAuditTabel();
 		});
 	}
+	
 	
 }// einde riedeactiveer 
 
