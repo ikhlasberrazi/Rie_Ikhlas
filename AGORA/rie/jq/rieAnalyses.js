@@ -134,7 +134,7 @@ function laadAuditTabel()
 		 
 }
 
-function nieuwDeel(actie, id, soort, form)
+function nieuwDeel(actie, id, form, soort)
 {
     var dialogOpts = 
 	{
@@ -161,7 +161,7 @@ function nieuwDeel(actie, id, soort, form)
 					$.post("jq/rieAnalyses.php",$(form).serialize(), function(data) 
 					{
 						//alert(id);
-						//alert("case opslaan");
+						alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
 						$("#laadForm").dialog("close");//divID in vragendatabase.php

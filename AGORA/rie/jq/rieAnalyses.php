@@ -198,7 +198,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				
                  	print("<div id='titel'><h2>Nieuw samengestelde audit</h2></div>");
 					print("<a href='javascript:void(0);' 
-							onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
+							onClick=\"nieuwDeel('onderdelenForm','','#onderdelenFormID','Onderdeel');\">
 							<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
 							</a>");
 					print("<div id='onderdeelDIV'></div><br />");
@@ -210,7 +210,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					
 					
 					
-					print("<br /><div id='spin'></div><br />");
+					//print("<br /><div id='spin'></div><br />");
 				}
 				else
 				{
@@ -541,7 +541,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						$r_update_sort=mysqli_query($link,$q_update_sort);
 											
 						print("<div id='vraagAppend' hidden><br />Vraag :<input value='".$vraagAppend[vraag]."' readonly><a href='javascript:void(0);' 
-											onClick=\"analyseLijst('Wijzig','".$laatsteVraagID."');\">
+											onClick=\"nieuwDeel('vragenForm','".$laatsteVraagID."','#VragenFormID');\">
 											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 										&nbsp;  &nbsp;  &nbsp; 
 										<a href='javascript:void(0);' 
@@ -697,15 +697,17 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						print("<div id='onderdeelAppend' hidden><br />
 						Onderdeel :<input value='".$onderdeelAppend[naam]."' readonly>
 						<a href='javascript:void(0);' 
-							onClick=\"nieuwDeel('onderdelenForm','".$laatsteOnderdeelID."');\">	
+							onClick=\"nieuwDeel('onderdelenForm','".$laatsteOnderdeelID."','#onderdelenFormID');\">	
 							<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 						&nbsp;  &nbsp;  &nbsp; 	
 						<a href='javascript:void(0);' 	
 							onClick=\"rieDeactiveer('actieveOnderdeel','Onderdeel','".$laatsteOnderdeelID."');\">	<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a>
 						<a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
+                            onClick=\"nieuwDeel('vragenForm','','#VragenFormID','Vraag');\">
                             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
-                        </a><br /></div> ");
+                        </a><br />
+						<!-- add new div spin + onderdeel id -->						
+						</div> ");
 						
 						if($r_insert) 
 						{
@@ -723,9 +725,10 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					{
 						//update
 						if($_SESSION[aard]=="super")
-							$q_update="update rie_onderdeel set naam='".$naam."' where id='".$id."'";
+							$q_update="update rie_onderdeel set naam='".$onderdeel."' where id='".$id."'";
 					
 						$r_update=mysqli_query($link,$q_update);
+						
 						if($r_update) 
 						{
 							if($_SESSION[aard]=="super") 
