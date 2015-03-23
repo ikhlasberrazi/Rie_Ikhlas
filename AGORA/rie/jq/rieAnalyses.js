@@ -22,13 +22,14 @@ function analyseLijst(actie,id)
 			{
 				$.post("jq/rieAnalyses.php",$("#auditFormID").serialize(), function(data) 
 					{
-					   dialog2();
-					   //alert("case opslaan");
+						//alert("case opslaan");
+						
+						
 						feedback("<center><img src='../images/progress.gif'></center>");
 						feedback(data);
 						
-						
-						//$("#dialog").dialog("close");
+						dialog2();
+						$("#dialog").dialog("close");
 						
                         $('.input').keypress(function (e) {
                           if (e.which == 13) {
@@ -37,7 +38,7 @@ function analyseLijst(actie,id)
                           }
                         });
 						
-					});//
+					});
 			},
 			"Sluiten": function()
 			{
@@ -45,21 +46,16 @@ function analyseLijst(actie,id)
 			}
 		}
 	};
-
-	
 	$("#dialog").dialog(dialogOpts);
 	$("#dialog").dialog({title: 'Nieuwe audit toevoegen '});
     $("#dialog").dialog("open");
-
-			
-		
-		
+	
 }//einde laadvragenlijst
 
 
 function dialog2(actie)
 {
- 	alert("in dialoog2");
+ 	//alert("in dialoog2");
 	var dialogOpts = 
 	{
         modal: true,
@@ -77,6 +73,15 @@ function dialog2(actie)
 			});
 		},buttons:
 		{
+			
+			"Opslaan": function() 
+			{
+				$.post("jq/rieAnalyses.php",{actie:'weergave'}, function(data) 
+					{
+						alert("case opslaan dialog 2");
+						
+					});
+			},
 			"Sluiten": function()
 			{
 				$(this).dialog("close");
@@ -88,21 +93,28 @@ function dialog2(actie)
 	$("#dialog2").dialog(dialogOpts);
 	$("#dialog2").dialog({title: 'Nieuwe audit toevoegen '});
     $("#dialog2").dialog("open");
-	
 }
 
-function voegToe(soort, tekst, onderdeel )
+function voegToe(soort )
 {
-	
+	var number =Math.floor((Math.random() * 10) + 1);
 	if(soort =="Onderdeel")
 	{
-		//$("#spin").append(onderdeel);
-		//$("#spin").append("<div>Onderdeel: <input value='".$onderdeelInput."' readonly> <br /></div>");
-		$("#spin").append(tekst);
-		alert(onderdeel);
+		var a=$('#onderdeelAppend').html();
+		
+		$("#spin").append(a);
+		//alert(soort);
 	}
 	else if (soort=="Vraag")
-		$("#spin").append(tekst);
+	{
+		var b=$('#vraagAppend').html();
+		//$("#spin").append(number);
+		$("#spin").append(b);
+	}
+			
+	
+	
+	//$("#spin").append(<?php  ?>);
 }
 
 
@@ -119,7 +131,7 @@ function laadAuditTabel()
 		 
 }
 
-function nieuwDeel(actie, id, soort, form, tekst, onderdeel)
+function nieuwDeel(actie, id, soort, form)
 {
     var dialogOpts = 
 	{
@@ -133,6 +145,7 @@ function nieuwDeel(actie, id, soort, form, tekst, onderdeel)
 				
 					$.post("jq/rieAnalyses.php",{actie:actie,id:id,form:form}, function(data) 
 					{
+						
 					$("#laadForm").html(data);
 					});
 		},
@@ -144,13 +157,13 @@ function nieuwDeel(actie, id, soort, form, tekst, onderdeel)
 					
 					$.post("jq/rieAnalyses.php",$(form).serialize(), function(data) 
 					{
-					   
+						//alert(id);
 						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
-						voegToe(soort, tekst, onderdeel);
+						
 						$("#laadForm").dialog("close");//divID in vragendatabase.php
 						feedback(data);
-						
+						voegToe(soort);
 						
 					
 						

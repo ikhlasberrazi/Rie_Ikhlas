@@ -17,27 +17,25 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 		$id=mysqli_real_escape_string($link,$_POST[id]);
 		$vraag=mysqli_real_escape_string($link,$_POST[vraag]);
         $type_input=mysqli_real_escape_string($link, $_POST[evaluatie]);
-		$naam=mysqli_real_escape_string($link,$_POST[naam]);//naam van audit
+        $soort_vraag=mysqli_real_escape_string($link, $_POST[soort_vraag]);
+        $id_sort_vraag=mysqli_real_escape_string($link, $_POST[id_sort_vraag]);
+        $onderdeel=mysqli_real_escape_string($link,$_POST[onderdeel]);
+		$naam=mysqli_real_escape_string($link,$_POST[naam]);
 		$onderdeelInput=mysqli_real_escape_string($link, $_POST[onderdeelInput]);
 		$omschrijving=mysqli_real_escape_string($link,$_POST[omschrijving]);
+		$laatsteAuditID=mysqli_real_escape_string($link,$_POST[laatsteAuditID]);
 		$inhoud=mysqli_real_escape_string($link,$_POST[inhoud]);
 		$aard=mysqli_real_escape_string($link,$_POST[aard]);
 		$categorie=mysqli_real_escape_string($link,$_POST[categorie]);
 		
 	}//einde post
-       
-		
-		
+   
         switch ($actie)
         {
             
                  case 'nieuweAudit':
                     
                 {
-                 	
-					
-					print("<br />ik ben hier<br />");	
-					print($id);	
 					//nazien of de audit al niet bestaat en als het al bestaat de audit te wijzigen
 					if ($id!="")
 					{
@@ -56,13 +54,10 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					}
 					else $audit=array();
 					
-						
-					print_r($audit);
-				
                     print("
-                    
                     <form id='auditFormID'>
                     <input type='hidden' name='actie' value='analyseLijstOpslaan'>
+                   
                     <input type='hidden' name='id' value='".$id."'>
                     
 				    <br />
@@ -140,21 +135,27 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					if($id=="")
 					{
 						$q_naarDB =
-						"insert into rie_audit (naam, omschrijving, inhoud, categorie, actief)
-						values('".$naam."','".$omschrijving."','test inhoud','".$categorie."','";
+						"insert into rie_audit (naam, omschrijving, categorie, actief)
+						values('".$naam."','".$omschrijving."','".$categorie."','";
 						if($_SESSION[aard]=="super") 
 							$q_naarDB.="1";
 						else $q_naarDB.="2";
 						
 						$q_naarDB.="')";
-							
 						$r_naarDB = mysqli_query($link,$q_naarDB);
-						if($r_naarDB)
-						{
-							if($_SESSION[aard]=="super")print("<br /><br /><br /><h2><font color=green><center>Begin met succes opgeslagen!</center></font></h2>");
-							else print("<br /><br /><br /><h2><font color=green><center>Voorstel tot wijziging met succes opgeslagen!</center></font></h2>");
-						}
-						else print("<br /><br /><br /><h2><font color=red><center>Begin opslaan MISLUKT!</center></font></h2>");
+						
+						
+						$laatsteAuditID =mysqli_insert_id($link);
+						print($laatsteAuditID);
+						
+						
+ 						if($r_naarDB) 						
+						 {
+							if($_SESSION[aard]=="super")print("<br /><br /><br /><h2><font color=green><center>Beschrijving met 	succes opgeslagen!</center></font></h2>");
+ 							else print("<br /><br /><br /><h2><font color=green><center>Voorstel tot wijziging met succes opgeslagen!</center></font></h2>");
+ 						}
+						else print("<br /><br /><br /><h2><font color=red><center>Begin opslaan MISLUKT!</center></font></h2>"					);
+
 					}
 					else 
 					{
@@ -180,11 +181,32 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                 
                 case 'auditAppend':
                 {
-					print("in append case");
+                 
+                 	
+					print("<a href='javascript:void(0);' 
+							onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
+							<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
+							</a>");
+					print("<a href='javascript:void(0);' 
+                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
+                            <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
+                        </a><br /><br />");
+					
+					print("<div><h2>Nieuw samengestelde audit</h2></div>");
+					
+					print("<!-- test om div toe te voegen -->
+							<br />
+							<div id='spin'></div><br />");
+							
 					
 				}break;
                 
-                
+                //komende van dialog2() opslaan functie
+                case 'weergave':
+                {
+					
+					
+				}break; //einde weergave
                 
                 
     			case 'actieveAuditLijst':
@@ -235,7 +257,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 								"aaSorting": [[ 1, "asc" ]],//hier wordt geezegd hoe het gesorteerd moet worden
 								"aoColumnDefs": [ 
 											
-											{ "bSearchable": false, "bSortable": false, "aTargets": [ 2 ] }
+											{ "bSearchable": false, "bSortable": false, "aTargets": [  ] }//door aTargets leegte laten, kan je in alle velden van de tabel zoeken  
 											//om tabel actie niet mee te laten sorteren
 										]
 					 
@@ -354,7 +376,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						Vraag: <input  type='text' name='vraag' value='".$vraag[vraag]."' size='75'><br/>
 						<br/>
 						Welke soort vraag wil je?
-						<select name='vraagSoort'>
+						<select name='soort_vraag'>
 						  <option value'Geen'>Selecteer...</option>
 						  <option value='Open' "); if ($vraag[soort_vraag]=="Open") print(" SELECTED "); print(">Open Vraag</option>
 						  <option value='JaNee' "); if ($vraag[soort_vraag]=="JaNee") print(" SELECTED "); print(">Ja Nee Vraag</option>
@@ -371,34 +393,86 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						</form>
 					");
 					
+					
+					
 				}break;	//einde vragenForm
+				
+				
+				
+				
 				
 				//button om vragen weg te schrijven naar database tabel rie_input
 				case 'vraag_opslaan':
 				{
+				 	//laatste audit_id ophalen
+					$q_auditID ="SELECT id FROM rie_audit ORDER BY id DESC lIMIT 1";
+					$r_auditID=mysqli_query($link,$q_auditID);
+					if(mysqli_num_rows($r_auditID)>"0")
+						{
+							$auditID=mysqli_fetch_array($r_auditID);
+						}
+					$id_audit=$auditID[id];
+					
+					
+					//laatste onderdeel id ophalen
+					$q_onderdeelID ="SELECT id FROM rie_onderdeel ORDER BY id DESC lIMIT 1";
+					$r_onderdeelID=mysqli_query($link,$q_onderdeelID);
+					if(mysqli_num_rows($r_onderdeelID)>"0")
+						{
+							$onderdeelID=mysqli_fetch_array($r_onderdeelID);
+						}
+					$id_onderdeel=$onderdeelID[id];
+				 
 					if($id=="")
 					{
 						//insert
 						$q_insert=
-						"insert into rie_input (vraag, soort_vraag, type_input, actief) 
-						values('".$vraag."','".$soort_vraag."','".$type_input."','";
+						"insert into rie_input (vraag,id_audit, id_onderdeel, soort_vraag, type_input, actief) 
+						values('".$vraag."','".$id_audit."','".$id_onderdeel."','".$soort_vraag."','".$type_input."','";
 						if($_SESSION[aard]=="super") 
 							$q_insert.="1";
 						else $q_insert.="2";
-						
 						$q_insert.="')";
-						
-						
 						$r_insert=mysqli_query($link,$q_insert);
 						
-						//laatste toegevoegde rij de id terughalen en wegschrijven
-						$id_laatste_vraag=mysqli_insert_id($link);
+						$laatsteVraagID = mysqli_insert_id($link);
+						
+											
+						//waarde van laatste vraag uit DB halen
+						$q_vraagAppend ="
+ 						select *
+ 						from rie_input
+ 						where id = '".$laatsteVraagID."' 
+ 						limit 1";
+ 						$r_vraagAppend=mysqli_query($link,$q_vraagAppend);
+ 						if(mysqli_num_rows($r_vraagAppend)>"0")
+ 						{
+ 							$vraagAppend=mysqli_fetch_array($r_vraagAppend);
+ 						}
+						else $vraagAppend=array();
+
+						$q_update_sort="
+								update rie_input 
+								set id_sort_vraag='".$laatsteVraagID."'  
+								where id='".$laatsteVraagID."'
+								";
+						$r_update_sort=mysqli_query($link,$q_update_sort);
+											
+						print("<div id='vraagAppend' hidden><br />Vraag :<input value='".$vraagAppend[vraag]."' readonly><a href='javascript:void(0);' 
+											onClick=\"analyseLijst('Wijzig','".$lijst[id]."');\">
+											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
+										&nbsp;  &nbsp;  &nbsp; 
+										<a href='javascript:void(0);' 
+											onClick=\"rieDeactiveer('actieveAudit','Audit','".$lijst[id]."','');\">
+											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a></div>");
+						
+						
+					
 						
 						if($r_insert) 
 						{
-							if($_SESSION[aard]=="super") 
-								print($id_laatste_vraag);
-								//print("<br /><br /><br /><h2><font color=green><center>Vraag met succes opgeslagen!</center></font></h2>");
+							if($_SESSION[aard]=="super")
+								print("<br /><br /><br /><h2><font color=green><center>Vraag met succes opgeslagen!</center></font></h2>");
 							else print("<br /><br /><br /><h2><font color=green><center>Voorstel nieuwe vraag met succes opgeslagen!</center></font></h2>");
 						}
 						//else print(mysql_error());
@@ -441,6 +515,15 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				 //bij volgende code wordt de form van in de dialog box geladen. 
 				case 'onderdelenForm':
 				{
+				 	//laatste audit_id ophalen
+					$q_auditID ="SELECT id FROM rie_audit ORDER BY id DESC lIMIT 1";
+					$r_auditID=mysqli_query($link,$q_auditID);
+					if(mysqli_num_rows($r_auditID)>"0")
+						{
+							$auditID=mysqli_fetch_array($r_auditID);
+						}
+					$id_audit=$auditID[id];
+				 
 				 //zoeken naar info in geval van wijzigen
 						if($id!="")
 					{
@@ -457,50 +540,85 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					}
 					else $onderdeel=array();
 					
+				
+						
+						
+					
 					print("
 						<form id='onderdelenFormID'>
 						<input type='hidden' name='actie' value='onderdeelOpslaan'>
 						<input type='hidden' name='id' value='".$id."'>
 						<br/>
-						Onderdeel: <input type='text'  value='".$onderdeel[naam]."' size='75'><br/>
+						Audit ID = '".$id_audit."' <br />
+						Onderdeel: <input type='text' name='onderdeel' value='".$onderdeel[naam]."' size='75'><br />
 						<br />
 						<br />
 						</form>
 					");
+					
+					
+					
+					
+					
 				}break;	//einde onderdelenForm
 				
 				//button om vragen weg te schrijven naar database tabel rie_
 				
 				case 'onderdeelOpslaan':
 				{
+				  	//laatste audit_id ophalen
+					$q_auditID ="SELECT id FROM rie_audit ORDER BY id DESC lIMIT 1";
+					$r_auditID=mysqli_query($link,$q_auditID);
+					if(mysqli_num_rows($r_auditID)>"0")
+						{
+							$auditID=mysqli_fetch_array($r_auditID);
+						}
+					$id_audit=$auditID[id];
+				 
 					if($id=="")
 					{
+					 	
 						//insert
 						$q_insert=
-						"insert into rie_onderdeel (naam, actief) 
-						values('".$naam."','";
+						"insert into rie_onderdeel (naam, id_audit, actief) 
+						values('".$onderdeel."','".$id_audit."','";
 						if($_SESSION[aard]=="super") 
 							$q_insert.="1";
 						else $q_insert.="2";
 						
 						$q_insert.="')";
-						//print($q_insert."<br />");
+						
 						$r_insert=mysqli_query($link,$q_insert);
 						
+						$laatsteOnderdeelID = mysqli_insert_id($link);
 						
-						//laatste onderdeel ophalen
-						//$id_laatste_onderdeel=mysqli_insert_id($link);
+						$q_onderdeelAppend ="
+						select *
+						from rie_onderdeel
+						where id = '".$laatsteOnderdeelID."' 
+						limit 1";
+						$r_onderdeelAppend=mysqli_query($link,$q_onderdeelAppend);
+						if(mysqli_num_rows($r_onderdeelAppend)>"0")
+						{
+							$onderdeelAppend=mysqli_fetch_array($r_onderdeelAppend);
+						}
+						else $onderdeelAppend=array();
+						
+											
+						print("<div id='onderdeelAppend' hidden><br />Onderdeel :<input value='".$onderdeelAppend[naam]."' readonly><a href='javascript:void(0);' onClick=\"analyseLijst('Wijzig','".$lijst[id]."');\">	<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> &nbsp;  &nbsp;  &nbsp; 	<a href='javascript:void(0);' 	onClick=\"rieDeactiveer('actieveAudit','Audit','".$lijst[id]."','');\">	<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a></div> ");
+						
 						if($r_insert) 
 						{
-							if($_SESSION[aard]=="super") 
-								//print($id_laatste_onderdeel);
-								print($onderdeelInput); //wordt doorgegeven 
-								//print("<br /><br /><br /><h2><font color=green><center>Onderdeel met succes opgeslagen!</center></font></h2>");
+							if($_SESSION[aard]=="super")
+								//print($onderdeelAppend[naam]);
+								print("<br /><br /><br /><h2><font color=green><center>ONDERDEEL met succes opgeslagen!</center></font></h2>");
 							else print("<br /><br /><br /><h2><font color=green><center>Voorstel nieuw onderdeel met succes opgeslagen!</center></font></h2>");
 						}
 						else print ("mislukt");
 						//else print("<br /><br /><br /><h2><font color=red><center>Onderdeel opslaan MISLUKT!</center></font></h2>");
 					}
+					
+					
 					
 					else
 					{
