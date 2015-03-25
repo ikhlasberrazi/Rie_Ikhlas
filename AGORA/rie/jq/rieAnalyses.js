@@ -97,23 +97,16 @@ function dialog2(id)
 
 function voegToe(soort,id_onderdeel)
 {
-	var number =Math.floor((Math.random() * 10) + 1);
 	if(soort =="Onderdeel")
 	{
 		var a=$('#onderdeelAppend').html();
-		
 		$("#onderdeelDIV").append(a);
-		//alert(soort);
 	}
 	
 	else if (soort=="Vraag")
 	{
 		var b=$('#vraagAppend').html();
-		//alert(id_onderdeel);
-		//$("#spin").append(number);
-		//$("#spin").append("$nbsp");
 		$('#onderdeelDIV').append(b);
-		
 	}
 			
 	
@@ -146,7 +139,7 @@ function laadAuditTabel()
 
 function nieuwDeel(actie, id, form, soort, id_onderdeel)
 {
-	
+	alert("id is: "+id);
     var dialogOpts = 
 	{
         modal: true,
@@ -171,7 +164,7 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel)
 					//alert(id_onderdeel);
 					$.post("jq/rieAnalyses.php",$(form).serialize(), function(data) 
 					{
-						
+						alert(id_onderdeel);
 						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						

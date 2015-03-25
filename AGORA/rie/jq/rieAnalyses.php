@@ -24,6 +24,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 		$onderdeelInput=mysqli_real_escape_string($link, $_POST[onderdeelInput]);
 		$omschrijving=mysqli_real_escape_string($link,$_POST[omschrijving]);
 		$laatsteAuditID=mysqli_real_escape_string($link,$_POST[laatsteAuditID]);
+        $laatsteOnderdeelID;
 		$inhoud=mysqli_real_escape_string($link,$_POST[inhoud]);
 		$aard=mysqli_real_escape_string($link,$_POST[aard]);
 		$categorie=mysqli_real_escape_string($link,$_POST[categorie]);
@@ -68,58 +69,6 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					</form>
 					");
 					
-					/*$onderdeelDIV="<div>Onderdeel: <input readonly> <br /></div>";
-					//	$onderdeelDIV="<div>Onderdeel: '".$onderdeel."'<br /></div>";
-					//	$onderdeelDIV="<div>Onderdeel: <input readonly> <br /></div>";
-					$onderdeelVastDIV="<div id='borderDIV' >
-											Onderdeel: <input type='text'  size='50' value='Voorbeeld onderdeel' readonly >&nbsp; &nbsp;
-											<a href='javascript:void(0);' 
-											onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
-											<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
-											</a>
-											<a href='javascript:void(0);' 
-							onClick=\"analyseLijst('wijzig','".$lijst[id]."');\">
-							<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
-											<br />
-										</div>";*/
-										
-					/*$print("<a href='javascript:void(0);' 
-											onClick=\"nieuwDeel('onderdelenForm','','Onderdeel','#onderdelenFormID');\">
-											<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
-											</a>");*/
-					
-					/*$vraagDIV="<div>Vraag: <input readonly><br />";
-					
-					$vraagVastDIV="<div id='borderDIV' >
-							Vraag: <input type='text' name='vraag' size='100' value='Voorbeeld vraag' readonly > &nbsp; &nbsp; 
-						<a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
-                            <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
-                        </a>
-						<a href='javascript:void(0);' 
-							onClick=\"analyseLijst('wijzig','".$lijst[id]."');\">
-							<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
-						<br />
-						<br />							
-							<form action=''>
-								<input type='checkbox' name='Open[]' value='ja'>Ja
-								<input type='checkbox' name='Open[]' value='nee'>Nee
-								<input type='checkbox' name='Open[]' value='nvt'>NVT
-							</form><br /><br />
-							Antwoord: <br />
-							<textarea id ='antwoordOpen' rows='5' cols='80' id='TITLE'>
-							</textarea>
-							
-					</div>";*/
-					/*print("<a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
-                            <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
-                        </a><br /><br />");
-					
-					print("<div><h2>Nieuw samengestelde audit</h2></div>");
-					print("<!-- test om div toe te voegen -->
-							<br />
-							<div id='spin'></div>");*/
 					
                 }break;//einde nieuwe audit
                  
@@ -190,21 +139,24 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                 
                 case 'auditAppend':
                 {
+                    
                  
                  if($id=='')
                  {
                  	print("<div id='titel'><h2>Nieuw samengestelde audit</h2></div>");
-                 	//print("<input type='hidden' name='actie' value='OnderdelenForm'>");
 					print("<a href='javascript:void(0);' 
 							onClick=\"nieuwDeel('onderdelenForm','','#onderdelenFormID','Onderdeel');\">
 							<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
 							</a>");
-					print("<div id='onderdeelDIV'></div><br />");
+					print("<br /><div id='onderdeelDIV'></div><br />");
 										
-					print("<br /><div id='spin'></div><br />");
+					
 				}
 				else
 				{
+				    
+                    
+                    
 					print("<div id='titel'><h2>Nieuw samengestelde audit ID = '".$id."'</h2></div>");
 					
 					//query naar onderdelen
@@ -218,52 +170,54 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					{
 					 	while($onderdeel=mysqli_fetch_array($r_onderdeel))
 					 	{
-							print("Onderdeel: <input type='text' name='onderdeel' value='".$onderdeel[naam]."' size='75' readonly>
+					 	 //onderdelen printen
+                                 print("<div id='onderdeelDIV'>Onderdeel: <input type='text' name='onderdeel' value='".$onderdeel[naam]."' size='75' readonly>
 							<a href='javascript:void(0);' 
-								onClick=\"nieuwDeel('onderdelenForm','".$laatsteOnderdeelID."','#onderdelenFormID');\">	
+								onClick=\"nieuwDeel('onderdelenForm','".$onderdeel[id]."','#onderdelenFormID');\">	
 								<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 								&nbsp;  &nbsp;  &nbsp; 	
 							<a href='javascript:void(0);' 	
-								onClick=\"rieDeactiveer('actieveOnderdeel','Onderdeel','".$laatsteOnderdeelID."');\">	
+								onClick=\"rieDeactiveer('actieveOnderdeel','Onderdeel','".$onderdeel[id]."');\">	
 								<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a>
 							<a href='javascript:void(0);' 
-                            	onClick=\"nieuwDeel('vragenForm','','#VragenFormID','Vraag');\">
+                            	onClick=\"nieuwDeel('vragenForm','','#VragenFormID','Vraag','".$onderdeel[id]."');\">
                             	<img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
-                        </a><br /><br />");
-						}
-											
-					}
-					else print("Geen onderdelen"); 
-					
-					
-					//query naar vragen
-					$q_vraag="
-					select *
-					from rie_input
-					where id_audit='".$id."'";
-					$r_vraag = mysqli_query($link,$q_vraag);
-					
-					
-					//TODO while lus maken voor meerdere vragen
-					if(mysqli_num_rows($r_vraag)>"0")
-					{
-					 	while($vraag=mysqli_fetch_array($r_vraag))
-					 	{
-							print("<br />&nbsp&nbsp&nbsp&nbsp&nbspVraag: <input type='text' name='vraag' value='".$vraag[vraag]."' size='75' readonly> <br /> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type='text' name='type_input' value='".$vraag[type_input]."' readonly><input type='text' name='soort_vraag' value='".$vraag[soort_vraag]."' readonly>
+                        </a><br /><br /></div>");
+                         
+                         	//query naar vragen
+        					$q_vraag="
+        					select *
+        					from rie_input
+        					where id_audit='".$id."'
+                            and id_onderdeel='".$onderdeel[id]."'";//laatsteonderdeelid is nog fout, omdat enkel de laastte onderelen
+        					$r_vraag = mysqli_query($link,$q_vraag);
+                            
+                            
+                            if(mysqli_num_rows($r_vraag)>"0")
+					       {
+        					 	while($vraag=mysqli_fetch_array($r_vraag))
+        					 	{
+        					 	 
+                                 
+                                 //vragen printen
+                               print("<br />&nbsp&nbsp&nbsp&nbsp&nbspVraag: <input type='text' name='vraag' value='".$vraag[vraag]."' size='75' readonly> <br /> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type='text' name='type_input' value='".$vraag[type_input]."' readonly><input type='text' name='soort_vraag' value='".$vraag[soort_vraag]."' readonly>
 							<a href='javascript:void(0);' 
-											onClick=\"nieuwDeel('vragenForm','".$laatsteVraagID."','#VragenFormID');\">
+											onClick=\"nieuwDeel('vragenForm','".$vraag[id]."','#VragenFormID');\">
 											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 										&nbsp;  &nbsp;  &nbsp; 
 							<a href='javascript:void(0);' 
-											onClick=\"rieDeactiveer('actieveLijst','Vraag','".$laatsteVraagID."');\">
-											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a><br />");
-						}
+											onClick=\"rieDeactiveer('actieveLijst','Vraag','".$vraag[id]."');\">
+											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a><br />");                 
+                                }//einde while vraag
 						
-					}
-					else print("<br />Geen vragen");
+                            }//einde if vraag
+					           else print("<br />Geen vragen");      
+                        
+						}//einde while onderdeel
+											
+					}//einde if onderdeel
+					else print("Geen onderdelen"); 
 					
-					
-				
 					
 				}	
 					
@@ -714,7 +668,8 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						
 						$r_insert=mysqli_query($link,$q_insert);
 						
-						$laatsteOnderdeelID = mysqli_insert_id($link);
+						 $laatsteOnderdeelID = mysqli_insert_id($link);
+                        
 						$q_update_sort="
 								update rie_onderdeel 
 								set id_sort_onderdeel='".$laatsteOnderdeelID."'  
@@ -722,6 +677,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 								";
 						$r_update_sort=mysqli_query($link,$q_update_sort);
 						
+
 						//laatste onderdeel uithalen en weergeven
 						$q_onderdeelAppend ="
 						select *
