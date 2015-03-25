@@ -193,28 +193,21 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                  
                  if($id=='')
                  {
-					
-					
-				
                  	print("<div id='titel'><h2>Nieuw samengestelde audit</h2></div>");
+                 	//print("<input type='hidden' name='actie' value='OnderdelenForm'>");
 					print("<a href='javascript:void(0);' 
 							onClick=\"nieuwDeel('onderdelenForm','','#onderdelenFormID','Onderdeel');\">
 							<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
 							</a>");
 					print("<div id='onderdeelDIV'></div><br />");
-					
-					/*print("<a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('vragenForm','','Vraag','#VragenFormID', '".$vraagDIV."');\">
-                            <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
-                        </a><br /><br />");*/
-					
-					
-					
-					//print("<br /><div id='spin'></div><br />");
+										
+					print("<br /><div id='spin'></div><br />");
 				}
 				else
 				{
 					print("<div id='titel'><h2>Nieuw samengestelde audit ID = '".$id."'</h2></div>");
+					
+					//query naar onderdelen
 					$q_onderdeel="
 					select *
 					from rie_onderdeel
@@ -223,12 +216,55 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					
 					if(mysqli_num_rows($r_onderdeel)>"0")
 					{
-						$onderdeel=mysqli_fetch_array($r_onderdeel);
+					 	while($onderdeel=mysqli_fetch_array($r_onderdeel))
+					 	{
+							print("Onderdeel: <input type='text' name='onderdeel' value='".$onderdeel[naam]."' size='75' readonly>
+							<a href='javascript:void(0);' 
+								onClick=\"nieuwDeel('onderdelenForm','".$laatsteOnderdeelID."','#onderdelenFormID');\">	
+								<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
+								&nbsp;  &nbsp;  &nbsp; 	
+							<a href='javascript:void(0);' 	
+								onClick=\"rieDeactiveer('actieveOnderdeel','Onderdeel','".$laatsteOnderdeelID."');\">	
+								<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a>
+							<a href='javascript:void(0);' 
+                            	onClick=\"nieuwDeel('vragenForm','','#VragenFormID','Vraag');\">
+                            	<img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
+                        </a><br /><br />");
+						}
+											
+					}
+					else print("Geen onderdelen"); 
+					
+					
+					//query naar vragen
+					$q_vraag="
+					select *
+					from rie_input
+					where id_audit='".$id."'";
+					$r_vraag = mysqli_query($link,$q_vraag);
+					
+					
+					//TODO while lus maken voor meerdere vragen
+					if(mysqli_num_rows($r_vraag)>"0")
+					{
+					 	while($vraag=mysqli_fetch_array($r_vraag))
+					 	{
+							print("<br />&nbsp&nbsp&nbsp&nbsp&nbspVraag: <input type='text' name='vraag' value='".$vraag[vraag]."' size='75' readonly> <br /> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type='text' name='type_input' value='".$vraag[type_input]."' readonly><input type='text' name='soort_vraag' value='".$vraag[soort_vraag]."' readonly>
+							<a href='javascript:void(0);' 
+											onClick=\"nieuwDeel('vragenForm','".$laatsteVraagID."','#VragenFormID');\">
+											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
+										&nbsp;  &nbsp;  &nbsp; 
+							<a href='javascript:void(0);' 
+											onClick=\"rieDeactiveer('actieveLijst','Vraag','".$laatsteVraagID."');\">
+											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a><br />");
+						}
 						
 					}
-					else $onderdeel=array(); 
+					else print("<br />Geen vragen");
 					
-					print("'".$onderdeel[naam]."'");
+					
+				
+					
 				}	
 					
 				}break;
@@ -350,6 +386,12 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 										<a href='javascript:void(0);' 
 											onClick=\"rieDeactiveer('actieveAudit','Audit','".$lijst[id]."','');\">
 											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a>
+										<a href='javascript:void(0);' 
+											onClick=\"\">
+											<img src='".$_SESSION[http_images]."show.png'> Bekijken</a>
+										<a href='javascript:void(0);' 
+											onClick=\"\">
+											<img src='".$_SESSION[http_images]."play.png'> Invullen</a>
 									</td>
 								</tr>
 									"); 
@@ -541,7 +583,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						$r_update_sort=mysqli_query($link,$q_update_sort);
 											
 						print("<div id='vraagAppend' hidden><br />Vraag :<input value='".$vraagAppend[vraag]."' readonly><a href='javascript:void(0);' 
-											onClick=\"nieuwDeel('vragenForm','".$laatsteVraagID."','#VragenFormID');\">
+											onClick=\"nieuwDeel('vragenForm','".$laatsteVraagID."','#VragenFormID','Vraag');\">
 											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 										&nbsp;  &nbsp;  &nbsp; 
 										<a href='javascript:void(0);' 
@@ -694,7 +736,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						else $onderdeelAppend=array();
 						
 											
-						print("<div id='onderdeelAppend' hidden><br />
+						print("<br /><div id='onderdeelAppend' hidden><br />
 						Onderdeel :<input value='".$onderdeelAppend[naam]."' readonly>
 						<a href='javascript:void(0);' 
 							onClick=\"nieuwDeel('onderdelenForm','".$laatsteOnderdeelID."','#onderdelenFormID');\">	
@@ -703,10 +745,10 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						<a href='javascript:void(0);' 	
 							onClick=\"rieDeactiveer('actieveOnderdeel','Onderdeel','".$laatsteOnderdeelID."');\">	<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a>
 						<a href='javascript:void(0);' 
-                            onClick=\"nieuwDeel('vragenForm','','#VragenFormID','Vraag');\">
+                            onClick=\"nieuwDeel('vragenForm','','#VragenFormID','Vraag','".$laatsteOnderdeelID."');\">
                             <img src='".$_SESSION[http_images]."nieuw.png'> Nieuwe Vraag
                         </a><br />
-						<!-- add new div spin + onderdeel id -->						
+										
 						</div> ");
 						
 						if($r_insert) 

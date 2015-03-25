@@ -78,7 +78,7 @@ function dialog2(id)
 			{
 				$.post("jq/rieAnalyses.php",{actie:'weergave'}, function(data) 
 					{
-						alert("case opslaan dialog 2");
+						//alert("case opslaan dialog 2");
 						
 					});
 			},
@@ -95,7 +95,7 @@ function dialog2(id)
     $("#dialog2").dialog("open");
 }
 
-function voegToe(soort )
+function voegToe(soort,id_onderdeel)
 {
 	var number =Math.floor((Math.random() * 10) + 1);
 	if(soort =="Onderdeel")
@@ -105,13 +105,14 @@ function voegToe(soort )
 		$("#onderdeelDIV").append(a);
 		//alert(soort);
 	}
+	
 	else if (soort=="Vraag")
 	{
 		var b=$('#vraagAppend').html();
-		
+		//alert(id_onderdeel);
 		//$("#spin").append(number);
 		//$("#spin").append("$nbsp");
-		$("#spin").append(b);
+		$('#onderdeelDIV').append(b);
 		
 	}
 			
@@ -120,6 +121,15 @@ function voegToe(soort )
 	//$("#spin").append(<?php  ?>);
 }
 
+//functie om audit lijst van vragen en onderdelen van een audit weergeven om te bewerken
+function laadAuditEdit()
+{
+	$.post("jq/rieAnalyses.php",{actie:'auditAppend'}, function(data) 
+					{
+						//alert("case opslaan dialog 2");
+						
+					});
+}
 
 function laadAuditTabel()
 {
@@ -134,8 +144,9 @@ function laadAuditTabel()
 		 
 }
 
-function nieuwDeel(actie, id, form, soort)
+function nieuwDeel(actie, id, form, soort, id_onderdeel)
 {
+	
     var dialogOpts = 
 	{
         modal: true,
@@ -157,16 +168,17 @@ function nieuwDeel(actie, id, form, soort)
 			"Opslaan": function() 
 			{				
 				
-					
+					//alert(id_onderdeel);
 					$.post("jq/rieAnalyses.php",$(form).serialize(), function(data) 
 					{
-						//alert(id);
-						alert("case opslaan");
+						
+						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
 						$("#laadForm").dialog("close");//divID in vragendatabase.php
+						//laadAuditEdit();
 						feedback(data);
-						voegToe(soort);
+						voegToe(soort,id_onderdeel);
 						
 					
 						
