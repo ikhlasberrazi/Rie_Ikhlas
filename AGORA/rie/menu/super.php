@@ -13,30 +13,32 @@ if(($_SESSION[aard]=="super") and ($_SESSION[school_id]=="0"))
                     print(" id='menu_actief'"); 
                     print("><span>Risicoanalyses</span></a>
                 </li> 
-                 <li>
-                    <a href='index.php?pad=school&go=vragendatabase'"); 
-                    if($go=="startvragen") 
-                    print(" id='menu_actief'"); 
-                    print("><span>Database Vragen</span></a>
-                </li> 
+                 
                  <li>
                     <a href='index.php?pad=beheer&go=meldingen'"); 
                     if($go=="meldingen") 
                     print(" id='menu_actief'"); 
                     print("><span>Meldingen</span></a>
                 </li> 
-				<li>
-                    <a href='index.php?pad=school&go=audit'"); 
-                    if($go=="audit") 
-                    print(" id='menu_actief'"); 
-                    print("><span>audit</span></a>
-                </li> 
+				
                 
                 <strong></strong>
         	</ul>
     	</div>
 	");
 	
+    
+    /*<li>
+                    <a href='index.php?pad=school&go=vragendatabase'"); 
+                    if($go=="startvragen") 
+                    print(" id='menu_actief'"); 
+                    print("><span>Database Vragen</span></a>
+                </li> <li>
+                    <a href='index.php?pad=school&go=audit'"); 
+                    if($go=="audit") 
+                    print(" id='menu_actief'"); 
+                    print("><span>audit</span></a>
+                </li> */
 	//<td align=center valign=bottom><a href='index.php?pad=beheer&go=nieuwescholen'>Nieuwe scholen</a></li><td align=center valign=bottom><a href='index.php?pad=beheer&go=schooladmin'>Scholen</a></li>*
 }
 elseif(($_SESSION[aard]=="super") and ($_SESSION[school_id]!="0"))

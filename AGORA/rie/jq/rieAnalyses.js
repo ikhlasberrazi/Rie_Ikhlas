@@ -1,4 +1,4 @@
-function analyseLijst(actie,id)
+function analyseLijst(actie,id,wijzig)
 {
 	
 	var dialogOpts = 
@@ -28,7 +28,7 @@ function analyseLijst(actie,id)
 						//feedback("<center><img src='../images/progress.gif'></center>");
 						//feedback(data);
 						laadAuditTabel();
-						dialog2(id);
+						dialog2(id, wijzig);
 						$("#dialog").dialog("close");
 						
                         $('.input').keypress(function (e) {
@@ -53,7 +53,7 @@ function analyseLijst(actie,id)
 }//einde laadvragenlijst
 
 
-function dialog2(id)
+function dialog2(id, wijzig)
 {	//alert(id);
  	//alert("in dialoog2");
 	var dialogOpts = 
@@ -64,7 +64,7 @@ function dialog2(id)
         width: 800,
 		open:function() 
 		{
-			$.post("jq/rieAnalyses.php",{actie:'auditAppend', id:id}, function(data) 
+			$.post("jq/rieAnalyses.php",{actie:'auditAppend', id:id, wijzig:wijzig}, function(data) 
 			{
 				
 				//alert("in openfunction");
@@ -91,7 +91,7 @@ function dialog2(id)
 
 	
 	$("#dialog2").dialog(dialogOpts);
-	$("#dialog2").dialog({title: 'Nieuwe audit toevoegen '});
+	$("#dialog2").dialog({title: 'Risicoanalyse '});
     $("#dialog2").dialog("open");
 }
 
@@ -100,13 +100,14 @@ function voegToe(soort,id_onderdeel)
 	if(soort =="Onderdeel")
 	{
 		var a=$('#onderdeelAppend').html();
+		//$("#onderdeelDIV"+id_onderdeel).append(a);
 		$("#onderdeelDIV").append(a);
 	}
 	
 	else if (soort=="Vraag")
 	{
 		var b=$('#vraagAppend').html();
-		$('#onderdeelDIV').append(b);
+		$('#'+id_onderdeel).append(b);
 	}
 			
 	
@@ -115,14 +116,58 @@ function voegToe(soort,id_onderdeel)
 }
 
 //functie om audit lijst van vragen en onderdelen van een audit weergeven om te bewerken
-function laadAuditEdit()
+function laadAuditEdit(data)
 {
 	$.post("jq/rieAnalyses.php",{actie:'auditAppend'}, function(data) 
+					{
+						$("#dialog2").html(data);
+						
+					});
+}
+
+
+function auditWeergave(actie, id_audit)
+{
+	var dialogOpts = 
+	{
+        modal: true,
+        autoOpen: false,
+        height: 600,
+        width: 800,
+		open:function() 
+		{
+			$.post("jq/rieAnalyses.php",{actie:actie, id_audit:id_audit}, function(data) 
+			{
+				
+				//alert("in openfunction");
+				$("#dialog2").html(data);
+			
+			});
+		},buttons:
+		{
+			
+			/* "Opslaan": function() 
+			{
+				$.post("jq/rieAnalyses.php",{actie:'weergave'}, function(data) 
 					{
 						//alert("case opslaan dialog 2");
 						
 					});
+			}, */
+			"Sluiten": function()
+			{
+				$(this).dialog("close");
+			}
+		}
+	};
+
+	
+	$("#dialog2").dialog(dialogOpts);
+	$("#dialog2").dialog({title: 'Audit bekijken'});
+    $("#dialog2").dialog("open");
 }
+
+
 
 function laadAuditTabel()
 {
@@ -137,7 +182,7 @@ function laadAuditTabel()
 		 
 }
 
-function nieuwDeel(actie, id, form, soort, id_onderdeel)
+function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
 {
 	alert("id is: "+id);
     var dialogOpts = 
@@ -150,7 +195,7 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel)
 		{
 					$("#laadForm").html("<img src='../images/progress.gif' />");
 				
-					$.post("jq/rieAnalyses.php",{actie:actie,id:id,form:form}, function(data) 
+					$.post("jq/rieAnalyses.php",{actie:actie,id:id,form:form,id_onderdeel:id_onderdeel,id_audit:id_audit}, function(data) //id_onderdeel toegevoegd
 					{
 						
 					$("#laadForm").html(data);
@@ -172,6 +217,7 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel)
 						//laadAuditEdit();
 						feedback(data);
 						voegToe(soort,id_onderdeel);
+						//laadAuditEdit(data);
 						
 					
 						
@@ -202,6 +248,7 @@ function rieDeactiveer(casephp,aard,id)
 			//alert(id);
 			$('div#feedback').bind('dialogclose');
 			feedback(data);
+			//laadAuditEdit();
 			
 		});
 	}
@@ -212,6 +259,7 @@ function rieDeactiveer(casephp,aard,id)
 			alert(id);
 			$('div#feedback').bind('dialogclose');
 			feedback(data);
+			//laadAuditEdit();
 			
 		});
 	}
@@ -222,7 +270,7 @@ function rieDeactiveer(casephp,aard,id)
 			//alert("check");
 			$('div#feedback').bind('dialogclose');
 			feedback(data);
-			laadAuditTabel();
+			
 		});
 	}
 	
