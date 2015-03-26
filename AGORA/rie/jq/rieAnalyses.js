@@ -1,4 +1,4 @@
-function analyseLijst(actie,id,wijzig)
+function analyseLijst(actie,id_audit,wijzig)
 {
 	
 	var dialogOpts = 
@@ -9,7 +9,8 @@ function analyseLijst(actie,id,wijzig)
         width: 700,
 		open:function() 
 		{
-			$.post("jq/rieAnalyses.php",{actie:'nieuweAudit', id:id}, function(data) 
+			//bij wijzig click onClick=\"analyseLijst('Wijzig','".$lijst[id]."','wijzig');\">
+			$.post("jq/rieAnalyses.php",{actie:'nieuweAudit', id_audit:id_audit}, function(data) 
 			{
 				
 				//alert("in openfunction");
@@ -22,13 +23,14 @@ function analyseLijst(actie,id,wijzig)
 			{
 				$.post("jq/rieAnalyses.php",$("#auditFormID").serialize(), function(data) 
 					{
-						//alert("case opslaan");
+						
 						
 						
 						//feedback("<center><img src='../images/progress.gif'></center>");
-						//feedback(data);
+						feedback(data);
 						laadAuditTabel();
-						dialog2(id, wijzig);
+						//alert("Audit id in AnalyseLijst()  is: "+id_audit);
+						dialog2(id_audit, wijzig);
 						$("#dialog").dialog("close");
 						
                         $('.input').keypress(function (e) {
@@ -53,7 +55,7 @@ function analyseLijst(actie,id,wijzig)
 }//einde laadvragenlijst
 
 
-function dialog2(id, wijzig)
+function dialog2(id_audit, wijzig)
 {	//alert(id);
  	//alert("in dialoog2");
 	var dialogOpts = 
@@ -64,7 +66,7 @@ function dialog2(id, wijzig)
         width: 800,
 		open:function() 
 		{
-			$.post("jq/rieAnalyses.php",{actie:'auditAppend', id:id, wijzig:wijzig}, function(data) 
+			$.post("jq/rieAnalyses.php",{actie:'auditAppend', id_audit:id_audit, wijzig:wijzig}, function(data) 
 			{
 				
 				//alert("in openfunction");
@@ -97,6 +99,7 @@ function dialog2(id, wijzig)
 
 function voegToe(soort,id_onderdeel)
 {
+	alert(soort + id_onderdeel);
 	if(soort =="Onderdeel")
 	{
 		var a=$('#onderdeelAppend').html();
@@ -107,7 +110,8 @@ function voegToe(soort,id_onderdeel)
 	else if (soort=="Vraag")
 	{
 		var b=$('#vraagAppend').html();
-		$('#'+id_onderdeel).append(b);
+		//$('#'+id_onderdeel).append(b);
+		$('#vraagDIV').append(b);
 	}
 			
 	
@@ -126,7 +130,7 @@ function laadAuditEdit(data)
 }
 
 
-function auditWeergave(actie, id_audit)
+function auditWeergave(actie,id_audit)
 {
 	var dialogOpts = 
 	{
@@ -209,14 +213,30 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
 					//alert(id_onderdeel);
 					$.post("jq/rieAnalyses.php",$(form).serialize(), function(data) 
 					{
-						alert(id_onderdeel);
+						alert("Id onderdeel "+id_onderdeel);
 						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
 						$("#laadForm").dialog("close");//divID in vragendatabase.php
 						//laadAuditEdit();
 						feedback(data);
-						voegToe(soort,id_onderdeel);
+						if (soort == 'Onderdeel' && id_onderdeel =='' )
+						{
+							voegToe(soort,id_onderdeel);
+						}
+						else if (soort == 'Onderdeel' && id_onderdeel !='' )
+						{
+							alert("id onderdeel in save ="+id_onderdeel);
+							//laadDeel(soort,id);
+						
+						}
+						else if (soort == 'Vraag' && id_onderdeel !='' )
+						{
+							
+						
+						}
+						
+							
 						//laadAuditEdit(data);
 						
 					
@@ -239,6 +259,16 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
     $("#laadForm").dialog("open");
 }//einde vraag rie
 
+
+function laadDeel(soort,id)
+{
+	$("#"+soort+id).html("<img src='../images/progress.gif'>");
+	$.post()
+	{
+		$("#"+soort+id).html(data);
+	}
+	
+}
 function rieDeactiveer(casephp,aard,id)
 {
 	if (casephp=='actieveLijst')
@@ -270,6 +300,7 @@ function rieDeactiveer(casephp,aard,id)
 			//alert("check");
 			$('div#feedback').bind('dialogclose');
 			feedback(data);
+			laadAuditTabel();
 			
 		});
 	}
