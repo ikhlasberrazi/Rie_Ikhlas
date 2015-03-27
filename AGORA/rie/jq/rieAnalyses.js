@@ -111,7 +111,7 @@ function voegToe(soort,id_onderdeel)
 	{
 		var b=$('#vraagAppend').html();
 		//$('#'+id_onderdeel).append(b);
-		$('#vraagDIV').append(b);
+		$('#onderdeelDIV').append(b);
 	}
 			
 	
@@ -213,7 +213,7 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
 					//alert(id_onderdeel);
 					$.post("jq/rieAnalyses.php",$(form).serialize(), function(data) 
 					{
-						alert("Id onderdeel "+id_onderdeel);
+						alert("Id onderdeel "+id_onderdeel + "id_audit ="+id_audit);
 						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
@@ -232,7 +232,7 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
 						}
 						else if (soort == 'Vraag' && id_onderdeel !='' )
 						{
-							
+							voegToe(soort,id_onderdeel);
 						
 						}
 						
