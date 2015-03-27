@@ -294,7 +294,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 					print("<div id='titel'><h2>Nieuw samengestelde audit ID = '".$id_audit."'</h2><h1><label >".$auditnaam[naam]."</label></h1></div><br />");
                     
                     print("<a href='javascript:void(0);' 
-							onClick=\"nieuwDeel('onderdelenForm','','#onderdelenFormID','Onderdeel','','".$auditnaam[id]."');\">
+							onClick=\"nieuwDeel('onderdelenForm','".$id."','#onderdelenFormID','Onderdeel','','".$auditnaam[id]."');\">
 							<img src='".$_SESSION[http_images]."nieuw.png'> Nieuw Onderdeel
 							</a>");
 					
@@ -741,7 +741,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                         <input type='hidden' name='id_audit' value='".$id_audit."'>
                         <input type='hidden' name='id_onderdeel' value='".$id_onderdeel."'>
 						<br/>
-						Audit ID = '".$id_audit."' <br />
+						Audit ID = '".$id."' <br />
 						Onderdeel: <input type='text' name='onderdeel' value='".$onderdeel[naam]."' size='75'><br />
 						<br />
 						<br />
@@ -761,7 +761,15 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 
 					if($id=="")
 					{
-						
+						//HIER ZIT NOG EEN FOUT BIJ HET MEEGEGEVN
+						/* $q_auditID ="SELECT id FROM rie_audit ORDER BY id DESC lIMIT 1";
+						$r_auditID=mysqli_query($link,$q_auditID);
+						if(mysqli_num_rows($r_auditID)>"0")
+  						{
+  							$auditID=mysqli_fetch_array($r_auditID);
+  						}
+						$id_audit=$auditID[id]; */
+					 	
 						//insert
 						$q_insert=
 						"insert into rie_onderdeel (naam, id_audit, actief) 
@@ -796,11 +804,18 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 							$onderdeelAppend=mysqli_fetch_array($r_onderdeelAppend);
 						}
 						else $onderdeelAppend=array();
+<<<<<<< HEAD
 						//print("<br /><div id='onderdeelAppend' hidden><br /><div id='Onderdeel'>
 						print("<br /><div id='onderdeelAppend' hidden><br /><div name='nieuwOnderdeel' id='Onderdeel".$laatsteOnderdeelID."'>
 						Onderdeel :<input name='Onderdeel".$laatsteOnderdeelID."' value='".$onderdeelAppend[naam]."' readonly>
+=======
+						
+											
+						print("<br /><div id='onderdeelAppend' hidden><br /><div id='Onderdeel".$laatsteOnderdeelID."'>
+						Onderdeel :<input value='".$onderdeelAppend[naam]."' readonly>
+>>>>>>> parent of ba35c39... vragen worden aan correcte onderdelen append
 						<a href='javascript:void(0);' 
-							onClick=\"nieuwDeel('onderdelenForm','','#onderdelenFormID','Onderdeel','".$laatsteOnderdeelID."','".$onderdeelAppend[id_audit]."');\">	
+							onClick=\"nieuwDeel('onderdelenForm','".$onderdeelAppend[id_audit]."','#onderdelenFormID','Onderdeel','".$laatsteOnderdeelID."');\">	
 							<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 						&nbsp;  &nbsp;  &nbsp; 	
 						<a href='javascript:void(0);' 	

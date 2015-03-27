@@ -107,6 +107,27 @@ function dialog2(id_audit, wijzig)
     $("#dialog2").dialog("open");
 }
 
+function voegToe(soort,id_onderdeel)
+{
+	alert(soort + id_onderdeel);
+	if(soort =="Onderdeel")
+	{
+		var a=$('#onderdeelAppend').html();
+		//$("#onderdeelDIV"+id_onderdeel).append(a);
+		$("#onderdeelDIV").append(a);
+	}
+	
+	else if (soort=="Vraag")
+	{
+		var b=$('#vraagAppend').html();
+		//$('#'+id_onderdeel).append(b);
+		$('#onderdeelDIV').append(b);
+	}
+			
+	
+	
+	//$("#spin").append(<?php  ?>);
+}
 
 //functie om audit lijst van vragen en onderdelen van een audit weergeven om te bewerken
 function laadAuditEdit(data)
@@ -175,6 +196,7 @@ function laadAuditTabel()
 		 
 }
 
+<<<<<<< HEAD
 
 function voegToe(soort)
 {
@@ -198,9 +220,11 @@ function voegToe(soort)
 	}
 }
 
+=======
+>>>>>>> parent of ba35c39... vragen worden aan correcte onderdelen append
 function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
 {
-	//alert("id is: "+id);
+	alert("id is: "+id);
     var dialogOpts = 
 	{
         modal: true,
@@ -222,19 +246,35 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
 			"Opslaan": function() 
 			{				
 				
-					//alert("opslaan ="+id_onderdeel);
+					//alert(id_onderdeel);
 					$.post("jq/rieAnalyses.php",$(form).serialize(), function(data) 
 					{
-						//alert("Id onderdeel "+id_onderdeel + "id_audit ="+id_audit);
+						alert("Id onderdeel "+id_onderdeel + "id_audit ="+id_audit);
 						//alert("case opslaan");
 						feedback("<center><img src='../images/progress.gif'></center>");
 						
 						$("#laadForm").dialog("close");//divID in vragendatabase.php
 						//laadAuditEdit();
 						feedback(data);
+<<<<<<< HEAD
 						//alert("juiste id is: "+id);
 						
 						voegToe(soort);
+=======
+						if (soort == 'Onderdeel' && id_onderdeel =='' )
+						{
+							voegToe(soort,id_onderdeel);
+						}
+						else if (soort == 'Onderdeel' && id_onderdeel !='' )
+						{
+							alert("id onderdeel in save ="+id_onderdeel);
+							//laadDeel(soort,id);
+						
+						}
+						else if (soort == 'Vraag' && id_onderdeel !='' )
+						{
+							voegToe(soort,id_onderdeel);
+>>>>>>> parent of ba35c39... vragen worden aan correcte onderdelen append
 						
 						
 							
