@@ -166,23 +166,22 @@ function laadAuditTabel()
 }
 
 
-function voegToe(soort,id)
+function voegToe(soort)
 {
+	//Id van child van #onderdeelAppend ophalen en wegschrijven in var. Deze waarde is uniek
 	var divID = $('[name="nieuwOnderdeel"]').attr('id');
-	//alert(soort + id);
+	
+	
+	
 	if(soort =="Onderdeel")
 	{
-		
 		var a=$('#onderdeelAppend').html();
-		//alert(divID);
-		//$("#onderdeelDIV"+id_onderdeel).append(a);
 		$("#onderdeelDIV").append(a);
 	}
 	
 	else if (soort=="Vraag")
 	{
 		var b=$('#vraagAppend').html();
-		//$('#'+id_onderdeel).append(b);
 		$('#'+divID).append(b);
 	}
 }
@@ -223,23 +222,8 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
 						feedback(data);
 						//alert("juiste id is: "+id);
 						
-						if (soort == 'Onderdeel' && id =='' )
-						{
-							//alert("nieuw onderdeel "+id)
-							voegToe(soort,id);
-						}
-						else if (soort == 'Onderdeel' && id_onderdeel !='' )
-						{
-							//alert("id onderdeel in save ="+id_onderdeel);
-							//laadDeel(soort,id);
+						voegToe(soort);
 						
-						}
-						else if (soort == 'Vraag' && id_onderdeel !='' )
-						{
-							//alert(id_onderdeel);
-							voegToe(soort,id_onderdeel);
-						
-						}
 						
 							
 						//laadAuditEdit(data);

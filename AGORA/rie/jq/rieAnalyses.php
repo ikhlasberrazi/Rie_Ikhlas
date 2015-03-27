@@ -643,7 +643,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 								";
 						$r_update_sort=mysqli_query($link,$q_update_sort);
 											
-						print("<div id='vraagAppend' hidden><br />Vraag :<input value='".$vraagAppend[vraag]."' readonly><a href='javascript:void(0);' 
+						print("<div id='vraagAppend' hidden><br />Vraag :<input id='Vraag".$laatsteVraagID."' value='".$vraagAppend[vraag]."' readonly><a href='javascript:void(0);' 
 											onClick=\"nieuwDeel('vragenForm','".$laatsteVraagID."','#VragenFormID','Vraag');\">
 											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 										&nbsp;  &nbsp;  &nbsp; 
@@ -748,7 +748,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 				case 'onderdeelOpslaan':
 				{
 
-					if($id_onderdeel=="")
+					if($id=="")
 					{
 						
 						//insert
