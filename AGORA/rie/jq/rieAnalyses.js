@@ -197,6 +197,7 @@ function laadAuditTabel()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 function voegToe(soort)
 {
@@ -220,6 +221,8 @@ function voegToe(soort)
 	}
 }
 
+=======
+>>>>>>> parent of ba35c39... vragen worden aan correcte onderdelen append
 =======
 >>>>>>> parent of ba35c39... vragen worden aan correcte onderdelen append
 function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
@@ -257,10 +260,13 @@ function nieuwDeel(actie, id, form, soort, id_onderdeel, id_audit)
 						//laadAuditEdit();
 						feedback(data);
 <<<<<<< HEAD
+<<<<<<< HEAD
 						//alert("juiste id is: "+id);
 						
 						voegToe(soort);
 =======
+=======
+>>>>>>> parent of ba35c39... vragen worden aan correcte onderdelen append
 						if (soort == 'Onderdeel' && id_onderdeel =='' )
 						{
 							voegToe(soort,id_onderdeel);

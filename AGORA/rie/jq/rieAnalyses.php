@@ -805,14 +805,20 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						}
 						else $onderdeelAppend=array();
 <<<<<<< HEAD
+<<<<<<< HEAD
 						//print("<br /><div id='onderdeelAppend' hidden><br /><div id='Onderdeel'>
 						print("<br /><div id='onderdeelAppend' hidden><br /><div name='nieuwOnderdeel' id='Onderdeel".$laatsteOnderdeelID."'>
 						Onderdeel :<input name='Onderdeel".$laatsteOnderdeelID."' value='".$onderdeelAppend[naam]."' readonly>
 =======
+=======
+>>>>>>> parent of ba35c39... vragen worden aan correcte onderdelen append
 						
 											
 						print("<br /><div id='onderdeelAppend' hidden><br /><div id='Onderdeel".$laatsteOnderdeelID."'>
 						Onderdeel :<input value='".$onderdeelAppend[naam]."' readonly>
+<<<<<<< HEAD
+>>>>>>> parent of ba35c39... vragen worden aan correcte onderdelen append
+=======
 >>>>>>> parent of ba35c39... vragen worden aan correcte onderdelen append
 						<a href='javascript:void(0);' 
 							onClick=\"nieuwDeel('onderdelenForm','".$onderdeelAppend[id_audit]."','#onderdelenFormID','Onderdeel','".$laatsteOnderdeelID."');\">	
