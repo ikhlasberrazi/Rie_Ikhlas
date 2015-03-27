@@ -177,7 +177,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                     print("
                     <form id='auditFormID'>
                     <input type='hidden' name='actie' value='analyseLijstOpslaan'>
-                    <input type='hidden' name='id' value='".$id_audit."'>
+                    <input type='hidden' name='id_audit' value='".$id_audit."'>
                     '".$id_audit."'
 				    <br />
                     Naam van audit: <input type='text' name='naam' value='".$audit[naam]."' size='100'><br /><br />
@@ -195,7 +195,7 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                 {
                     //checken of het een nieuwe audit is of niet
 					
-					if($id=="")
+					if($id_audit=="")
 					{
 						$q_naarDB =
 						"insert into rie_audit (id_scholengemeenschap,id_school, id_subgroep,id_user,naam,omschrijving, categorie, actief)
@@ -241,7 +241,16 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
                 
                 
                
-                
+                case 'laadVraagVeld':
+				{
+
+					
+				}break; //einde laadVraagVeld
+				
+				case 'laadOnderdeelVeld':
+				{
+					
+				}break; //einde laadOnderdeelVeld
                 
                 
                 
@@ -642,14 +651,16 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 								where id='".$laatsteVraagID."'
 								";
 						$r_update_sort=mysqli_query($link,$q_update_sort);
-											
-						print("<div id='vraagAppend' hidden><br />Vraag :<input id='Vraag".$laatsteVraagID."' value='".$vraagAppend[vraag]."' readonly><a href='javascript:void(0);' 
+//print("<br /><div id='onderdeelAppend' hidden><br /><div name='nieuwOnderdeel' id='Onderdeel".$laatsteOnderdeelID."' class='onderdeelKlasse'>
+												
+						
+						print("<div id='vraagAppend' hidden>'<div id='Vraag".$laatsteVraagID."' name='nieuweVraag' ><br />Vraag :<input name='Vraag".$laatsteVraagID."' value='".$vraagAppend[vraag]."' readonly><a href='javascript:void(0);' 
 											onClick=\"nieuwDeel('vragenForm','".$laatsteVraagID."','#VragenFormID','Vraag');\">
 											<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 
 										&nbsp;  &nbsp;  &nbsp; 
 										<a href='javascript:void(0);' 
 											onClick=\"rieDeactiveer('actieveLijst','Vraag','".$laatsteVraagID."');\">
-											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a></div>");
+											<img src='".$_SESSION[http_images]."kruis.png'> Deactiveer</a></div></div>");
 						
 						
 					
@@ -786,10 +797,8 @@ if(($_SESSION[login]=="wos_coprant") and ($_SESSION[rie]!=""))
 						}
 						else $onderdeelAppend=array();
 						//print("<br /><div id='onderdeelAppend' hidden><br /><div id='Onderdeel'>
-						print("<br /><div id='onderdeelAppend' hidden><br /><div name='nieuwOnderdeel' id='Onderdeel".$laatsteOnderdeelID."' class='onderdeelKlasse'>
-										
-						
-						Onderdeel :<input  value='".$onderdeelAppend[naam]."' readonly>
+						print("<br /><div id='onderdeelAppend' hidden><br /><div name='nieuwOnderdeel' id='Onderdeel".$laatsteOnderdeelID."'>
+						Onderdeel :<input name='Onderdeel".$laatsteOnderdeelID."' value='".$onderdeelAppend[naam]."' readonly>
 						<a href='javascript:void(0);' 
 							onClick=\"nieuwDeel('onderdelenForm','','#onderdelenFormID','Onderdeel','".$laatsteOnderdeelID."','".$onderdeelAppend[id_audit]."');\">	
 							<img src='".$_SESSION[http_images]."edit.png'> Wijzig</a> 

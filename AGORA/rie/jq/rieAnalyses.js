@@ -54,6 +54,16 @@ function analyseLijst(actie,id_audit,wijzig)
 	
 }//einde laadvragenlijst
 
+function refresh(actie, id_audit)
+{
+	$.post("jq/rieAnalyses.php",{actie:'auditAppend', id_audit:id_audit}, function(data) 
+			{
+				
+				//alert("in openfunction");
+				$("#dialog2").html(data);
+			
+			});
+}
 
 function dialog2(id_audit, wijzig)
 {	//alert(id);
@@ -169,9 +179,10 @@ function laadAuditTabel()
 function voegToe(soort)
 {
 	//Id van child van #onderdeelAppend ophalen en wegschrijven in var. Deze waarde is uniek
-	var divID = $('[name="nieuwOnderdeel"]').attr('id');
+	var divOnderdeelID = $('[name="nieuwOnderdeel"]').attr('id');
+	var divVraagID = $('[name="nieuweVraag"]').attr('id');
 	
-	
+	alert(divOnderdeelID);
 	
 	if(soort =="Onderdeel")
 	{
@@ -181,8 +192,9 @@ function voegToe(soort)
 	
 	else if (soort=="Vraag")
 	{
+		alert(divVraagID + divOnderdeelID);
 		var b=$('#vraagAppend').html();
-		$('#'+divID).append(b);
+		$('#'+divOnderdeelID).append(b);
 	}
 }
 
